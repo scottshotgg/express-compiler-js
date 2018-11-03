@@ -159,7 +159,14 @@ function lex(filedata) {
       } while (filedata[i] !== "\n");
     } else if (lexemes[accumulator]) {
       tokens.push(lexemes[accumulator]);
-      accumulator = char;
+      accumulator = "";
+    }
+
+    if (char.charCodeAt(0) < 33 || char.charCodeAt(0) > 127) {
+      if (accumulator != "") {
+        tokens.push(lexLit(accumulator));
+      }
+      accumulator = "";
     } else if (lexemes[char]) {
       if (accumulator != "") {
         tokens.push(lexLit(accumulator));
@@ -167,11 +174,6 @@ function lex(filedata) {
       }
 
       tokens.push(lexemes[char]);
-    } else if (char.charCodeAt(0) < 33 || char.charCodeAt(0) > 127) {
-      if (accumulator != "") {
-        tokens.push(lexLit(accumulator));
-      }
-      accumulator = "";
     } else {
       accumulator += char;
     }
