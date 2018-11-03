@@ -1,6 +1,7 @@
 const lexer = require('./lexer.js');
 const parser = require('./parser.js');
 const fs = require('fs')
+const util = require('util');
 
 const filename = process.argv[2]
 if (!filename) {
@@ -17,4 +18,4 @@ console.log(tokens)
 console.log("\n")
 
 const ast = parser.buildAST(tokens)
-console.log(ast)
+console.log(util.inspect(ast, { depth: null, colors: true }));

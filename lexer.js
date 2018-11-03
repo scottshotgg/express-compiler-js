@@ -53,8 +53,13 @@ const lexemes = {
   "*": {
     type: "pri_op",
     value: "*"
+  },
+  ".": {
+    type: "selector",
+    value: "."
   }
-}
+};
+
 
 var tokens = []
 
@@ -102,7 +107,7 @@ function lexLit(acc) {
       return {
         type: "literal",
         kind: "float",
-        value: acc
+        value: literal
       }
     }
   }
@@ -112,7 +117,7 @@ function lexLit(acc) {
     return {
       type: "literal",
       kind: "int",
-      value: acc
+      value: literal
     }
   }
 

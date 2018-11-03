@@ -1,3 +1,5 @@
+const lexer = require('./lexer.js');
+
 var nodes = {
   type: "program",
   statements: []
@@ -15,8 +17,16 @@ function buildAST(_tokens) {
 
   for (i = 0; i < tokens.length; i++) {
     const stmt = getStatement()
-    if (stmt == undefined) {
-      break
+    if (stmt.type === "error") {
+      console.error(`\n${
+          stmt.msg
+        }\n\n${
+          stmt.hint
+      }`)
+      console.error(tokens[i]);
+      console.error(stmt.stack);
+      
+      process.exit(9)
     }
 
     nodes.statements.push(stmt)
@@ -34,8 +44,7 @@ function getStatement() {
       return getDeclarationStatement()
 
     default:
-      console.log("not implemented statement", tok, i)
-      process.exit(9)
+      return getHint()
   }
 }
 
@@ -80,26 +89,57 @@ function getFactor() {
   // Literal and Ident are the ground states
   switch (tok.type) {
     case 'literal':
+      if (i < tokens.length - 1 && tokens[i + 1].type == "selector") {
+        i++
+        const expr = getExpression()
+        if (typeof expr === "undefined") {
+          return getHint()
+        }
+
+        return {
+          type: 'literal',
+          kind: 'float',
+          // mantissa and abscissa
+          value: parseFloat(tok.value + "." + expr.value)
+        }
+      }
+
       return tok
 
     case 'ident':
-      const ident = tokens[i]
-      if (ident.value.includes(".")) {
-        const selections = ident.value.split(".");
-        return {
-          type: 'selector'
-        }
+      // if (ident.value.includes(".")) {
+      //   const [newIdent, ...selections] = ident.value.split(".")
+      //   tokens.splice(i + 1, 0, {
+      //     type: 'ident',
+      //     value: selections.join(".")
+      //   })
+      //   return {
+      //     type: 'selector',
+      //     ident: newIdent,
+      //     value: getExpression()
+      //   }
+      // }
+      if (i === tokens.length - 1 || tokens[i + 1].type !== "selector") {
+        return tok;
       }
-      return tok
+
+      i++
+
+    case 'selector':
+      return getSelection()
+
 
     case 'lparen':
       const expr = getExpression()
       if (i < tokens.length - 1 && tokens[i + 1].type == "rparen") {
         i++
         return expr
-      } else {
+      } else if (i + 1 < tokens.length - 1 && tokens[i + 2].type !== "selector") {
         return undefined
       }
+
+      i++
+      return getSelection(expr)
 
     case 'lbracket':
       return getArray()
@@ -111,8 +151,7 @@ function getFactor() {
       return getString()
 
     default:
-      console.log("not implemented factor", tok)
-      process.exit(9)
+      return getHint()
   }
 }
 
@@ -143,8 +182,8 @@ function getArray() {
 
   while (i < tokens.length - 1 && tokens[i + 1].type != 'rbracket') {
     var expr = getExpression()
-    if (expr == undefined) {
-      return expr
+    if (expr === undefined) {
+      return getHint()
     }
 
     expressions.push(expr)
@@ -165,8 +204,8 @@ function getBlock() {
   i++
   while (i < tokens.length - 1 && tokens[i].type != 'rbrace') {
     var stmt = getStatement()
-    if (stmt == undefined) {
-      return stmt
+    if (stmt === undefined) {
+      return getHint()
     }
 
     statements.push(stmt)
@@ -194,5 +233,46 @@ function getString() {
     type: "literal",
     kind: "string",
     value: string
+  }
+}
+
+function getSelection(prevExpr) {
+  const tok = tokens[i]
+
+  if (prevExpr && tokens[i].type != "selector") {
+    console.log("i got here")
+    return {
+      type: "selector",
+      ident: tok.value,
+      selection: prevExpr
+    }
+  }
+
+  const expression = getExpression()
+
+  return {
+    type: "selector",
+    ident: tok.value,
+    selection: getSelection(expression)
+  }
+}
+
+function getHint() {
+  const source = tokens
+    .slice(i - 5, i + 5)
+    .map(v => v.value)
+    .join("")
+
+  const err = new Error('');
+
+  const stack = err.stack.split(/\n/).slice(2).map(
+    v => v.trim().split(/\s+/)[1]
+  );
+
+  return {
+    type: "error",
+    msg: `Not implemented in ${stack.shift()}`,
+    hint: `${source}\n${' '.repeat(5)}^`,
+    stack
   }
 }
