@@ -40,10 +40,16 @@ function getStatement() {
     case "type":
       var type = tok.value;
 
-      if (isNextToken("lbracket") && isNextToken("rbracket", 2)) {
-        type += "[]";
+      if (isNextToken("lbracket")) {
+        var arrlen = "";
 
-        i += 2;
+        i++;
+        if (isNextToken("rbracket")) {
+          type += "[]";
+        } else {
+          i--;
+          type = getArrayLength(tok.value);
+        }
       }
 
       return getDeclarationStatement(false, type);
@@ -171,10 +177,17 @@ function getFactor() {
         return getFunctionCall();
       }
 
-      if (i === tokens.length - 1 || tokens[i + 1].type !== "selector") {
-        return tok;
+      if (isNextToken("lbracket")) {
+        return {
+          type: "selector",
+          ident: tok.value,
+          selection: getBracketSelector()
+        };
       }
 
+      if (!isNextToken("selector") && !isNextToken("lbracket")) {
+        return tok;
+      }
       i++;
 
     case "selector":
@@ -272,6 +285,45 @@ function getArray() {
     type: "literal",
     kind: "array",
     value: expressions
+  };
+}
+
+function getArrayLength(type) {
+  i++;
+  const expr = getExpression();
+  i++;
+
+  return {
+    type: `${type}[]`,
+    length: expr
+  };
+}
+
+function getBracketSelector() {
+  const ident = tokens[i];
+  i++;
+  const expr = getExpression();
+  i++;
+
+  if (isNextToken("selector")) {
+    i++;
+    i++;
+    const fact = getFactor();
+    return {
+      type: "selection",
+      ident,
+      selection: {
+        type: "selector",
+        ident: expr,
+        selection: fact
+      }
+    };
+  }
+
+  return {
+    type: "selector",
+    ident: expr,
+    selection: expr
   };
 }
 
@@ -469,22 +521,15 @@ function getFunction() {
 
 function getFunctionCall() {
   const ident = tokens[i];
-
-  i++;
-  i++;
+  i++
 
   let params = [];
 
-  // params
-  while (tokens[i].type !== "rparen") {
-    const param = tokens[i];
-    if (param.type !== "ident") {
-      return getHint();
-    }
-
+  while (!isNextToken("rparen")) {
+    const param = getExpression();
     params.push(param);
-    i++;
   }
+  i++
 
   return {
     type: "call",

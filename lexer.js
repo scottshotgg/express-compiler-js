@@ -1,133 +1,147 @@
 const lexemes = {
   let: {
-    type: "declaration",
-    value: "let"
+    type: 'declaration',
+    value: 'let'
+  },
+  true: {
+    type: 'literal',
+    kind: 'bool',
+    value: true
+  },
+  false: {
+    type: 'literal',
+    kind: 'bool',
+    value: false
   },
   var: {
-    type: "type",
-    value: "var"
+    type: 'type',
+    value: 'var'
   },
   int: {
-    type: "type",
-    value: "int"
+    type: 'type',
+    value: 'int'
   },
   float: {
-    type: "type",
-    value: "float"
+    type: 'type',
+    value: 'float'
   },
   string: {
-    type: "type",
-    value: "string"
+    type: 'type',
+    value: 'string'
   },
   bool: {
-    type: "type",
-    value: "bool"
+    type: 'type',
+    value: 'bool'
+  },
+  object: {
+    type: 'type',
+    value: 'object'
   },
 
   for: {
-    type: "loop",
-    value: "for"
+    type: 'loop',
+    value: 'for'
   },
   if: {
-    type: "control",
-    value: "if"
+    type: 'control',
+    value: 'if'
   },
   else: {
-    type: "control",
-    value: "else"
+    type: 'control',
+    value: 'else'
   },
   function: {
-    type: "declaration",
-    value: "function"
+    type: 'declaration',
+    value: 'function'
   },
   // convert `fn` tokens to `function` tokens for easier parsing;
   // don't care if they aren't marked as lambdas for now
   fn: {
-    type: "declaration",
-    value: "function"
+    type: 'declaration',
+    value: 'function'
   },
   return: {
-    type: "return",
-    value: "return"
+    type: 'return',
+    value: 'return'
   },
 
   // TODO: need to implement <= or >=
-  ">": {
-    type: "comparator",
-    value: ">"
+  '>': {
+    type: 'comparator',
+    value: '>'
   },
-  "<": {
-    type: "comparator",
-    value: "<"
+  '<': {
+    type: 'comparator',
+    value: '<'
   },
-  "!": {
-    type: "unary",
-    value: "!"
-  },
-
-  "=": {
-    type: "assign",
-    value: "="
-  },
-  ":": {
-    type: "assign",
-    value: ":"
+  '!': {
+    type: 'unary',
+    value: '!'
   },
 
-  '"': {
-    type: "quote",
-    value: '"'
+  '=': {
+    type: 'assign',
+    value: '='
   },
-  "(": {
-    type: "lparen",
-    value: "("
-  },
-  ")": {
-    type: "rparen",
-    value: ")"
-  },
-  "[": {
-    type: "lbracket",
-    value: "["
-  },
-  "]": {
-    type: "rbracket",
-    value: "]"
-  },
-  "{": {
-    type: "lbrace",
-    value: "{"
-  },
-  "}": {
-    type: "rbrace",
-    value: "}"
+  ':': {
+    type: 'assign',
+    value: ':'
   },
 
-  "+": {
-    type: "bin_op",
-    value: "+"
+  '\'': {
+    type: 'quote',
+    value: '\''
   },
-  "-": {
-    type: "bin_op",
-    value: "-"
+  '(': {
+    type: 'lparen',
+    value: '('
   },
-  "*": {
-    type: "pri_op",
-    value: "*"
+  ')': {
+    type: 'rparen',
+    value: ')'
   },
-  "/": {
-    type: "pri_op",
-    value: "/"
+  '[': {
+    type: 'lbracket',
+    value: '['
   },
-  ".": {
-    type: "selector",
-    value: "."
+  ']': {
+    type: 'rbracket',
+    value: ']'
+  },
+  '{': {
+    type: 'lbrace',
+    value: '{'
+  },
+  '}': {
+    type: 'rbrace',
+    value: '}'
+  },
+
+  '+': {
+    type: 'bin_op',
+    value: '+'
+  },
+  '-': {
+    type: 'bin_op',
+    value: '-'
+  },
+  '*': {
+    type: 'pri_op',
+    value: '*'
+  },
+  '/': {
+    type: 'pri_op',
+    value: '/'
+  },
+  '.': {
+    type: 'selector',
+    value: '.'
   }
 };
 
 var tokens = [];
 
-var accumulator = "";
+var accumulator = '';
 
 module.exports = {
   lex: lex
@@ -136,41 +150,41 @@ module.exports = {
 function lex(filedata) {
   for (var i = 0; i < filedata.length; i++) {
     const char = filedata[i];
-    if (char === "/" && i < filedata.length - 1 && filedata[i + 1] === "*") {
-      i++; // skip "/"
-      i++; // skip "*"
+    if (char === '/' && i < filedata.length - 1 && filedata[i + 1] === '*') {
+      i++; // skip '/'
+      i++; // skip '*'
       while (
         i < filedata.length - 2 &&
-        filedata[i] !== "*" &&
-        filedata[i + 1] !== "/"
+        filedata[i] !== '*' &&
+        filedata[i + 1] !== '/'
       ) {
-        i++; // skip any or "*"
+        i++; // skip any or '*'
       }
-      i++; // skip last "/"
+      i++; // skip last '/'
     } else if (
-      char === "/" &&
+      char === '/' &&
       i < filedata.length - 1 &&
-      filedata[i + 1] === "/"
+      filedata[i + 1] === '/'
     ) {
-      i++; // skip "/"
-      i++; // skip next "/"
+      i++; // skip '/'
+      i++; // skip next '/'
       do {
-        i++; // skip rest and "\n"
-      } while (filedata[i] !== "\n");
+        i++; // skip rest and '\n'
+      } while (filedata[i] !== '\n');
     } else if (lexemes[accumulator]) {
       tokens.push(lexemes[accumulator]);
-      accumulator = "";
+      accumulator = '';
     }
 
     if (char.charCodeAt(0) < 33 || char.charCodeAt(0) > 127) {
-      if (accumulator != "") {
+      if (accumulator != '') {
         tokens.push(lexLit(accumulator));
       }
-      accumulator = "";
+      accumulator = '';
     } else if (lexemes[char]) {
-      if (accumulator != "") {
+      if (accumulator != '') {
         tokens.push(lexLit(accumulator));
-        accumulator = "";
+        accumulator = '';
       }
 
       tokens.push(lexemes[char]);
@@ -179,7 +193,7 @@ function lex(filedata) {
     }
   }
 
-  if (accumulator != "") {
+  if (accumulator != '') {
     tokens.push(lexLit(accumulator));
   }
 
@@ -189,12 +203,12 @@ function lex(filedata) {
 function lexLit(acc) {
   var literal;
 
-  if (acc.includes(".")) {
+  if (acc.includes('.')) {
     literal = parseFloat(acc);
     if (!isNaN(literal)) {
       return {
-        type: "literal",
-        kind: "float",
+        type: 'literal',
+        kind: 'float',
         value: literal
       };
     }
@@ -203,14 +217,14 @@ function lexLit(acc) {
   literal = parseInt(acc);
   if (!isNaN(literal)) {
     return {
-      type: "literal",
-      kind: "int",
+      type: 'literal',
+      kind: 'int',
       value: literal
     };
   }
 
   return {
-    type: "ident",
+    type: 'ident',
     value: acc
   };
 }

@@ -1,16 +1,18 @@
 function something(int a  int b) {
   let a = b
-/*
-foobar
-*/
-  return /*
-    foobar
-  */ a
+  return a
 }
 
-something()
+something(17 + 18, a + b)
 
-let a = a // something.foo(a  b  c)
+let something = [ a, b, c ]
+let a = something[0]
+let a = something["sdfklsdjklf"]
+let a = something[0 == 1]
+let b = something[9].a + 2
+let b = something[x[0]] + 2
+
+let a = false
 let b = 2
 
 

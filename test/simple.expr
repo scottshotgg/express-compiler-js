@@ -1,4 +1,7 @@
-string[] a = 8
+string[i] a = 8
+string[i + 1] b = a
+
+object[something(14)] b = q
 
 let a = 7.62
 
