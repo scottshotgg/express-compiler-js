@@ -39,11 +39,7 @@ function getStatement() {
   switch (tok.type) {
     case "type":
       var type = tok.value;
-      console.log({
-        cur: tok,
-        next: tokens[i + 1],
-        nextnext: tokens[i + 2]
-      });
+
       if (isNextToken("lbracket") && isNextToken("rbracket", 2)) {
         type += "[]";
 
@@ -324,34 +320,6 @@ function getString() {
   };
 }
 
-function getSelection(prevExpr) {
-  const tok = tokens[i];
-
-  // if (prevExpr && tokens[i].type != "selector") {
-  //   console.log("i got here")
-  //   return {
-  //     type: "selector",
-  //     ident: tok.value,
-  //     selection: prevExpr
-  //   }
-  // }
-
-  const expression = getExpression();
-
-  console.log({
-    expression,
-    tok,
-    curTok: tokens[i]
-  });
-  process.exit(9);
-
-  return {
-    type: "selector",
-    ident: tok.value,
-    selection: getSelection(prevExpr || expression)
-  };
-}
-
 // TODO: add some fucking error checking
 function getLoop() {
   const loop = {
@@ -415,7 +383,6 @@ function getFunction() {
 
   i++;
   const ident = tokens[i];
-  console.log(ident);
 
   if (ident.type !== "ident") {
     return getHint();
@@ -448,7 +415,6 @@ function getFunction() {
       value: argIdent
     });
   }
-  console.log("args", args);
 
   if (isNextTokenValue("-") && isNextTokenValue(">", 2)) {
     // @TODO do stuff with return types
@@ -457,7 +423,6 @@ function getFunction() {
 
     while (isNextToken("type")) {
       i++;
-      console.log("i am hereeeee");
       const type = tokens[i];
       returnTypes.push(type);
     }
@@ -512,7 +477,6 @@ function getFunctionCall() {
 
   // params
   while (tokens[i].type !== "rparen") {
-    console.log("i am hereeeee");
     const param = tokens[i];
     if (param.type !== "ident") {
       return getHint();
@@ -521,8 +485,6 @@ function getFunctionCall() {
     params.push(param);
     i++;
   }
-
-  console.log("params", params);
 
   return {
     type: "call",

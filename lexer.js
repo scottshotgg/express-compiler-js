@@ -207,7 +207,6 @@ function lexLit(acc) {
     };
   }
 
-  console.log(acc);
   return {
     type: "ident",
     value: acc
