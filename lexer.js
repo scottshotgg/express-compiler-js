@@ -50,10 +50,6 @@ const lexemes = {
     type: "return",
     value: "return"
   },
-  // "->": {
-  //   type: "returntype",
-  //   value: "->"
-  // },
 
   // TODO: need to implement <= or >=
   ">": {
@@ -91,7 +87,7 @@ const lexemes = {
     value: ")"
   },
   "[": {
-    type: "lbrac-ket",
+    type: "lbracket",
     value: "["
   },
   "]": {
@@ -163,7 +159,7 @@ function lex(filedata) {
       } while (filedata[i] !== "\n");
     } else if (lexemes[accumulator]) {
       tokens.push(lexemes[accumulator]);
-      accumulator = "";
+      accumulator = char;
     } else if (lexemes[char]) {
       if (accumulator != "") {
         tokens.push(lexLit(accumulator));
@@ -211,6 +207,7 @@ function lexLit(acc) {
     };
   }
 
+  console.log(acc);
   return {
     type: "ident",
     value: acc

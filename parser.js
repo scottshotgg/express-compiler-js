@@ -37,9 +37,24 @@ function getStatement() {
   var tok = tokens[i];
 
   switch (tok.type) {
+    case "type":
+      var type = tok.value;
+      console.log({
+        cur: tok,
+        next: tokens[i + 1],
+        nextnext: tokens[i + 2]
+      });
+      if (isNextToken("lbracket") && isNextToken("rbracket", 2)) {
+        type += "[]";
+
+        i += 2;
+      }
+
+      return getDeclarationStatement(false, type);
+
     // let and var
     case "declaration":
-      return getDeclarationStatement();
+      return getDeclarationStatement(true);
 
     case "loop":
       return getLoop();
@@ -216,7 +231,7 @@ function getAssignment() {
 }
 
 // ( `let` | `var` ) IDENT `=` EXPRESSION
-function getDeclarationStatement() {
+function getDeclarationStatement(infer, kind = tokens[i]) {
   if (tokens[i].value == "function") {
     return getFunction();
   }
@@ -236,6 +251,8 @@ function getDeclarationStatement() {
 
   return {
     type: "declaration",
+    infer: infer,
+    kind: kind,
     ident: tok.value,
     value: getExpression()
   };
@@ -534,10 +551,20 @@ function getHint() {
     .slice(2)
     .map(v => v.trim().split(/\s+/)[1]);
 
+  const hint = `${source}\n${" ".repeat(firstSource.length)}^`;
+  const curFun = stack.shift();
+
+  // @TODO: start we need to break in other areas
+  console.error(`\n${curFun}\n\n${hint}`);
+  console.error(tokens[i]);
+  console.error(stack);
+  process.exit(9);
+  // @TODO: end we need to break in other areas
+
   return {
     type: "error",
-    msg: `Not implemented in ${stack.shift()}`,
-    hint: `${source}\n${" ".repeat(firstSource.length)}^`,
+    msg: `Not implemented in ${curFun}`,
+    hint,
     stack
   };
 }
