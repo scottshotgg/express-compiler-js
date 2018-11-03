@@ -1,0 +1,7 @@
+let obj = {
+  let a: [ 7, 3.34 ]
+  let b = 8.94
+  let c = "something"
+}
+
+let obj2 = obj.a.(a + 9)
