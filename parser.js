@@ -1,4 +1,4 @@
-const lexer = require('./lexer.js');
+// const commonFactory = require('./js');
 
 var nodes = {
   type: "program",
@@ -7,6 +7,8 @@ var nodes = {
 
 var i = 0
 var tokens
+
+// const common = commonFactory(tokens);
 
 module.exports = {
   buildAST: buildAST
@@ -17,15 +19,15 @@ function buildAST(_tokens) {
 
   for (i = 0; i < tokens.length; i++) {
     const stmt = getStatement()
-    if (stmt.type === "error") {
+    if (stmt && stmt.type === "error") {
       console.error(`\n${
-          stmt.msg
+        stmt.msg
         }\n\n${
-          stmt.hint
-      }`)
+        stmt.hint
+        }`)
       console.error(tokens[i]);
       console.error(stmt.stack);
-      
+
       process.exit(9)
     }
 
@@ -43,6 +45,12 @@ function getStatement() {
     case "declaration":
       return getDeclarationStatement()
 
+    case "loop":
+      return getLoop()
+
+    case "control":
+      return getControl()
+
     default:
       return getHint()
   }
@@ -52,7 +60,7 @@ function getExpression() {
   i++
   const term = getTerm()
 
-  if (i < tokens.length - 1 && tokens[i + 1].type == "bin_op") {
+  if (isNextToken("bin_op")) {
     i++
     return {
       type: "expression",
@@ -69,7 +77,7 @@ function getExpression() {
 function getTerm() {
   const factor = getFactor()
 
-  if (i < tokens.length - 1 && tokens[i + 1].type == "pri_op") {
+  if (isNextToken("pri_op")) {
     i++
     return {
       type: "expression",
@@ -89,7 +97,7 @@ function getFactor() {
   // Literal and Ident are the ground states
   switch (tok.type) {
     case 'literal':
-      if (i < tokens.length - 1 && tokens[i + 1].type == "selector") {
+      if (isNextToken("selector") && tokens[i + 2].type != "selector") {
         i++
         const expr = getExpression()
         if (typeof expr === "undefined") {
@@ -126,20 +134,35 @@ function getFactor() {
       i++
 
     case 'selector':
-      return getSelection()
+      return {
+        type: "selector",
+        ident: tok.value,
+        selection: getExpression()
+      }
 
 
     case 'lparen':
       const expr = getExpression()
-      if (i < tokens.length - 1 && tokens[i + 1].type == "rparen") {
+
+      // if (i < tokens.length - 1 && tokens[i + 2].type == "selector") {
+      //   console.log("i am here")
+      //   i += 2
+      //   // console.log(expr)
+      //   // return getSelection(expr)
+      //   return {
+      //     type: "selector",
+      //     ident: tok.value,
+      //     selection: getSelection(prevExpr || expression)
+      //   }
+      // }
+
+      if (isNextToken("rparen")) {
         i++
         return expr
-      } else if (i + 1 < tokens.length - 1 && tokens[i + 2].type !== "selector") {
-        return undefined
       }
 
       i++
-      return getSelection(expr)
+      return getHint()
 
     case 'lbracket':
       return getArray()
@@ -162,12 +185,12 @@ function getDeclarationStatement() {
   const tok = tokens[i]
 
   if (i < tokens.length && tok.type != "ident") {
-    return undefined
+    return getHint()
   }
 
   i++
   if (i < tokens.length && tokens[i].type != "assign") {
-    return undefined
+    return getHint()
   }
 
   return {
@@ -239,22 +262,84 @@ function getString() {
 function getSelection(prevExpr) {
   const tok = tokens[i]
 
-  if (prevExpr && tokens[i].type != "selector") {
-    console.log("i got here")
-    return {
-      type: "selector",
-      ident: tok.value,
-      selection: prevExpr
-    }
-  }
+  // if (prevExpr && tokens[i].type != "selector") {
+  //   console.log("i got here")
+  //   return {
+  //     type: "selector",
+  //     ident: tok.value,
+  //     selection: prevExpr
+  //   }
+  // }
 
   const expression = getExpression()
+
+  console.log({
+    expression, tok, curTok: tokens[i]
+  });
+  process.exit(9);
 
   return {
     type: "selector",
     ident: tok.value,
-    selection: getSelection(expression)
+    selection: getSelection(prevExpr || expression)
   }
+}
+
+// TODO: add some fucking error checking
+function getLoop() {
+  const loop = {
+    kind: tokens[i].value
+  }
+
+  const expr = getExpression()
+
+  // skip over the .. (2 selectors) for now
+  i++
+  i++
+
+  const expr1 = getExpression()
+  console.log("stuff", expr, expr1)
+
+  loop.start = expr
+  loop.end = expr1
+  loop.step = 1
+
+  i++
+
+  loop.block = getBlock()
+
+  return loop
+}
+
+// TODO: add some fucking error checking
+function getControl() {
+  const tok = tokens[i]
+  switch (tok.value) {
+    case "else":
+      if (!isNextToken("condition")) {
+        i++
+
+        return {
+          condition: void 0,
+          body: getBlock()
+        }
+      }
+
+    case "if":
+      const expr = getExpression()
+      i++
+      return {
+        condition: expr,
+        body: getBlock()
+      }
+  }
+
+
+  i++
+  console.log(getControl())
+  // console.log(getExpression())
+
+  process.exit(9)
 }
 
 function getHint() {
@@ -275,4 +360,8 @@ function getHint() {
     hint: `${source}\n${' '.repeat(5)}^`,
     stack
   }
+}
+
+function isNextToken(type, offset = 1) {
+  return i < tokens.length - offset && tokens[i + offset].type == type;
 }

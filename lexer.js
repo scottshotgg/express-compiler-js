@@ -7,6 +7,18 @@ const lexemes = {
     type: "declaration",
     value: "var"
   },
+  "for": {
+    type: "loop",
+    value: "for"
+  },
+  "if": {
+    type: "control",
+    value: "if"
+  },
+  "else": {
+    type: "control",
+    value: "else"
+  },
 
   "=": {
     type: "assign",

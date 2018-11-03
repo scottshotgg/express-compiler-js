@@ -1,1 +1,1 @@
-let obj2 = obj.a.(9+9).c
+let obj2 = obj.a.b.c
