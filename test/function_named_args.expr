@@ -1,0 +1,12 @@
+function something(foobar: int, baz: string)
+  -> (someString: string, someInt: int) {
+  return "", 0
+}
+
+myInt = 1
+myString = "hello"
+
+{ someInt } = something(
+  foobar: myString,
+  baz: myInt
+)

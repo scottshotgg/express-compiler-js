@@ -1,23 +1,72 @@
 const lexemes = {
-  "let": {
+  let: {
     type: "declaration",
     value: "let"
   },
-  "var": {
-    type: "declaration",
+  var: {
+    type: "type",
     value: "var"
   },
-  "for": {
+  int: {
+    type: "type",
+    value: "int"
+  },
+  float: {
+    type: "type",
+    value: "float"
+  },
+  string: {
+    type: "type",
+    value: "string"
+  },
+  bool: {
+    type: "type",
+    value: "bool"
+  },
+
+  for: {
     type: "loop",
     value: "for"
   },
-  "if": {
+  if: {
     type: "control",
     value: "if"
   },
-  "else": {
+  else: {
     type: "control",
     value: "else"
+  },
+  function: {
+    type: "declaration",
+    value: "function"
+  },
+  // convert `fn` tokens to `function` tokens for easier parsing;
+  // don't care if they aren't marked as lambdas for now
+  fn: {
+    type: "declaration",
+    value: "function"
+  },
+  return: {
+    type: "return",
+    value: "return"
+  },
+  // "->": {
+  //   type: "returntype",
+  //   value: "->"
+  // },
+
+  // TODO: need to implement <= or >=
+  ">": {
+    type: "comparator",
+    value: ">"
+  },
+  "<": {
+    type: "comparator",
+    value: "<"
+  },
+  "!": {
+    type: "unary",
+    value: "!"
   },
 
   "=": {
@@ -29,9 +78,9 @@ const lexemes = {
     value: ":"
   },
 
-  "\"": {
+  '"': {
     type: "quote",
-    value: "\""
+    value: '"'
   },
   "(": {
     type: "lparen",
@@ -42,7 +91,7 @@ const lexemes = {
     value: ")"
   },
   "[": {
-    type: "lbracket",
+    type: "lbrac-ket",
     value: "["
   },
   "]": {
@@ -62,9 +111,17 @@ const lexemes = {
     type: "bin_op",
     value: "+"
   },
+  "-": {
+    type: "bin_op",
+    value: "-"
+  },
   "*": {
     type: "pri_op",
     value: "*"
+  },
+  "/": {
+    type: "pri_op",
+    value: "/"
   },
   ".": {
     type: "selector",
@@ -72,70 +129,90 @@ const lexemes = {
   }
 };
 
+var tokens = [];
 
-var tokens = []
-
-var accumulator = ""
+var accumulator = "";
 
 module.exports = {
   lex: lex
-}
+};
 
 function lex(filedata) {
-  for (char of filedata) {
-    if (lexemes[accumulator]) {
-      tokens.push(lexemes[accumulator])
-      accumulator = ""
-    } else if (char == " " || char == "\n") {
-      if (accumulator != "") {
-        tokens.push(lexLit(accumulator))
+  for (var i = 0; i < filedata.length; i++) {
+    const char = filedata[i];
+    if (char === "/" && i < filedata.length - 1 && filedata[i + 1] === "*") {
+      i++; // skip "/"
+      i++; // skip "*"
+      while (
+        i < filedata.length - 2 &&
+        filedata[i] !== "*" &&
+        filedata[i + 1] !== "/"
+      ) {
+        i++; // skip any or "*"
       }
-      accumulator = ""
+      i++; // skip last "/"
+    } else if (
+      char === "/" &&
+      i < filedata.length - 1 &&
+      filedata[i + 1] === "/"
+    ) {
+      i++; // skip "/"
+      i++; // skip next "/"
+      do {
+        i++; // skip rest and "\n"
+      } while (filedata[i] !== "\n");
+    } else if (lexemes[accumulator]) {
+      tokens.push(lexemes[accumulator]);
+      accumulator = "";
     } else if (lexemes[char]) {
       if (accumulator != "") {
-        tokens.push(lexLit(accumulator))
-        accumulator = ""
+        tokens.push(lexLit(accumulator));
+        accumulator = "";
       }
 
-      tokens.push(lexemes[char])
+      tokens.push(lexemes[char]);
+    } else if (char.charCodeAt(0) < 33 || char.charCodeAt(0) > 127) {
+      if (accumulator != "") {
+        tokens.push(lexLit(accumulator));
+      }
+      accumulator = "";
     } else {
-      accumulator += char
+      accumulator += char;
     }
   }
 
   if (accumulator != "") {
-    tokens.push(lexLit(accumulator))
+    tokens.push(lexLit(accumulator));
   }
 
-  return tokens
+  return tokens;
 }
 
 function lexLit(acc) {
-  var literal
+  var literal;
 
   if (acc.includes(".")) {
-    literal = parseFloat(acc)
+    literal = parseFloat(acc);
     if (!isNaN(literal)) {
       return {
         type: "literal",
         kind: "float",
         value: literal
-      }
+      };
     }
   }
 
-  literal = parseInt(acc)
+  literal = parseInt(acc);
   if (!isNaN(literal)) {
     return {
       type: "literal",
       kind: "int",
       value: literal
-    }
+    };
   }
 
   return {
     type: "ident",
     value: acc
-  }
+  };
 }
-

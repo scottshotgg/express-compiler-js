@@ -1,1 +1,9 @@
 let a = 7.62
+
+let obj = {
+  let a: [ 7, 3.34 ]
+  let b = 8.94
+  let c = "something"
+}
+
+obj = foo

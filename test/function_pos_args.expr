@@ -1,0 +1,17 @@
+function something(int a  int b) {
+  let a = b
+/*
+foobar
+*/
+  return /*
+    foobar
+  */ a
+}
+
+something()
+
+let a = a // something.foo(a  b  c)
+let b = 2
+
+
+

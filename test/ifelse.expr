@@ -1,7 +1,9 @@
-if i {
+if a != b {
 
-} else if j {
+} else if 2 + i + 5 > 10 + 12 {
+
+} else if 5 > 3 + 12 < 3 {
 
 } else {
-  
+
 }
