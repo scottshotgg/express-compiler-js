@@ -1,0 +1,140 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "i",
+      "value": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": 4,
+        "left": {
+          "type": "literal",
+          "kind": "int",
+          "value": 5
+        },
+        "right": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 4,
+          "left": {
+            "type": "expression",
+            "kind": "bin_op",
+            "value": 8,
+            "left": {
+              "type": "literal",
+              "kind": "int",
+              "value": 8
+            },
+            "right": {
+              "type": "literal",
+              "kind": "int",
+              "value": 7
+            }
+          },
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "var",
+      "ident": "a",
+      "value": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": ")",
+        "left": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 8,
+          "left": {
+            "type": "literal",
+            "kind": "int",
+            "value": 5
+          },
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 8
+          }
+        },
+        "right": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 4,
+          "left": {
+            "type": "literal",
+            "kind": "int",
+            "value": 7
+          },
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "b",
+      "value": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": 90,
+        "left": {
+          "type": "literal",
+          "kind": "array",
+          "value": [
+            {
+              "type": "literal",
+              "kind": "int",
+              "value": 7
+            },
+            {
+              "type": "literal",
+              "kind": "int",
+              "value": 8
+            },
+            {
+              "type": "expression",
+              "kind": "bin_op",
+              "value": 78,
+              "left": {
+                "type": "literal",
+                "kind": "int",
+                "value": 9
+              },
+              "right": {
+                "type": "literal",
+                "kind": "int",
+                "value": 78
+              }
+            }
+          ]
+        },
+        "right": {
+          "type": "literal",
+          "kind": "float",
+          "value": 78.9
+        }
+      }
+    }
+  ]
+}

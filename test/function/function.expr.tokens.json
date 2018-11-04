@@ -1,0 +1,365 @@
+[
+  {
+    "type": "declaration",
+    "value": "function"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "return",
+    "value": "return"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 17
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 18
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "ident",
+    "value": "a,"
+  },
+  {
+    "type": "ident",
+    "value": "b,"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 0
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "ident",
+    "value": "\"sdfklsdjklf\""
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 0
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 1
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 9
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 2
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "ident",
+    "value": "x"
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 0
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 2
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "bool",
+    "value": false
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 2
+  }
+]

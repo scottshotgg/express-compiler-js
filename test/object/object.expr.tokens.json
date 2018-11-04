@@ -1,0 +1,42 @@
+[
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "obj2"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "obj"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  }
+]

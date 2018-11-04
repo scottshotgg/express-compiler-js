@@ -1,0 +1,19 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "f",
+      "value": {
+        "type": "literal",
+        "kind": "float",
+        "value": 6.6666667
+      }
+    }
+  ]
+}

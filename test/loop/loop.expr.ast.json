@@ -1,0 +1,61 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "kind": "for",
+      "start": {
+        "type": "literal",
+        "kind": "int",
+        "value": 1
+      },
+      "end": {
+        "type": "literal",
+        "kind": "int",
+        "value": 10
+      },
+      "step": 1,
+      "block": {
+        "type": "literal",
+        "kind": "block",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "i",
+            "value": {
+              "type": "literal",
+              "kind": "int",
+              "value": 8
+            }
+          },
+          {
+            "kind": "for",
+            "start": {
+              "type": "literal",
+              "kind": "int",
+              "value": 1
+            },
+            "end": {
+              "type": "selector",
+              "ident": "obj",
+              "selection": {
+                "type": "ident",
+                "value": "a"
+              }
+            },
+            "step": 1,
+            "block": {
+              "type": "literal",
+              "kind": "block",
+              "value": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

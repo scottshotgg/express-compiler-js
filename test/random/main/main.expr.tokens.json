@@ -1,0 +1,168 @@
+[
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 8
+  },
+  {
+    "type": "pri_op",
+    "value": "*"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 7
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 4
+  },
+  {
+    "type": "type",
+    "value": "var"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 8
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "pri_op",
+    "value": "*"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 7
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 4
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "lbracket",
+    "value": "["
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 7
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 8
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 9
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 78
+  },
+  {
+    "type": "rbracket",
+    "value": "]"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 78
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 90
+  }
+]

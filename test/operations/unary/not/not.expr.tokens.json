@@ -1,0 +1,38 @@
+[
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "unary",
+    "value": "!"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  }
+]

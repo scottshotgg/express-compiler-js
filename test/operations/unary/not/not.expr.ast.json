@@ -1,0 +1,31 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "expression",
+        "kind": "not",
+        "value": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": "c",
+          "left": {
+            "type": "ident",
+            "value": "b"
+          },
+          "right": {
+            "type": "ident",
+            "value": "c"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,585 +1,640 @@
-// const commonFactory = require('./js');
-
-var nodes = {
-  type: "program",
-  statements: []
-};
-
-var i = 0;
-var tokens;
-
-// const common = commonFactory(tokens);
-
-module.exports = {
-  buildAST: buildAST
-};
-
-function buildAST(_tokens) {
-  tokens = _tokens;
-
-  for (i = 0; i < tokens.length; i++) {
-    const stmt = getStatement();
-    if (stmt && stmt.type === "error") {
-      console.error(`\n${stmt.msg}\n\n${stmt.hint}`);
-      console.error(tokens[i]);
-      console.error(stmt.stack);
-
-      process.exit(9);
+module.exports = class Parser {
+  constructor(tokens) {
+    // return {
+    this.tokens = tokens
+    this.index = 0
+    this.nodes = {
+      type: "program",
+      statements: []
     }
 
-    nodes.statements.push(stmt);
-  }
+    this.buildAST = function () {
+      for (this.index = 0; this.index < this.tokens.length; this.index++) {
+        const stmt = this.getStatement();
+        if (stmt && stmt.type === "error") {
+          console.error(`\n${stmt.msg}\n\n${stmt.hint}`);
+          console.error(this.tokens[this.index]);
+          console.error(stmt.stack);
 
-  return nodes;
-}
-
-function getStatement() {
-  var tok = tokens[i];
-
-  switch (tok.type) {
-    case "type":
-      var type = tok.value;
-
-      if (isNextToken("lbracket")) {
-        var arrlen = "";
-
-        i++;
-        if (isNextToken("rbracket")) {
-          type += "[]";
-        } else {
-          i--;
-          type = getArrayLength(tok.value);
+          process.exit(9);
         }
+
+        this.nodes.statements.push(stmt);
       }
 
-      return getDeclarationStatement(false, type);
+      return this.nodes;
+    }
 
-    // let and var
-    case "declaration":
-      return getDeclarationStatement(true);
+    this.getStatement = function () {
+      var tok = this.tokens[this.index];
 
-    case "loop":
-      return getLoop();
+      switch (tok.type) {
+        // var/int/bool/float/string
+        case "type":
+          var type = tok.value;
 
-    case "control":
-      return getControl();
+          if (this.isNextToken("lbracket")) {
+            var arrlen = "";
 
-    case "ident":
-      if (isNextToken("lparen")) {
-        return getFunctionCall();
+            this.index++;
+            if (this.isNextToken("rbracket")) {
+              type += "[]";
+            } else {
+              this.index--;
+              type = this.getArrayLength(tok.value);
+            }
+          }
+
+          return this.getDeclarationStatement(false, type);
+
+        // let and var
+        case "declaration":
+          return this.getDeclarationStatement(true);
+
+        // for
+        case "loop":
+          return this.getLoop();
+
+        // if/else
+        case "control":
+          return this.getControl();
+
+        // ident
+        case "ident":
+          if (this.isNextToken("lparen")) {
+            return this.getFunctionCall();
+          }
+          return this.getAssignment();
+
+        // return
+        case "return":
+          return this.getReturn();
+
+        default:
+          return this.getHint();
       }
-      return getAssignment();
+    }
 
-    case "return":
-      return getReturn();
+    this.getExpression = function () {
+      this.index++;
+      const term = this.getTerm();
 
-    default:
-      return getHint();
-  }
-}
+      if (this.isNextToken("bin_op")) {
+        this.index++;
 
-function getExpression() {
-  i++;
-  const term = getTerm();
-
-  if (isNextToken("bin_op")) {
-    i++;
-    return {
-      type: "expression",
-      kind: "bin_op",
-      value: tokens[i].value,
-      left: term,
-      right: getExpression()
-    };
-  }
-
-  return term;
-}
-
-function getTerm() {
-  const factor = getFactor();
-  const tok = tokens[i];
-
-  if (isNextToken("pri_op")) {
-    i++;
-    return {
-      type: "expression",
-      kind: "bin_op",
-      value: tok.value,
-      left: factor,
-      right: getExpression()
-    };
-  } else if (isNextToken("comparator")) {
-    i++;
-    return {
-      type: "expression",
-      kind: "comp_op",
-      value: tok.value,
-      left: factor,
-      right: getExpression()
-    };
-  } else if (
-    (isNextToken("assign") ||
-      (isNextToken("unary") && isNextTokenValue("!"))) &&
-    isNextToken("assign", 2)
-  ) {
-    i++;
-    i++;
-    return {
-      type: "expression",
-      kind: "comp_op",
-      value: tokens[i - 1].value + tokens[i].value,
-      left: factor,
-      right: getExpression()
-    };
-  }
-
-  return factor;
-}
-
-function getFactor() {
-  const tok = tokens[i];
-
-  // Literal and Ident are the ground states
-  switch (tok.type) {
-    case "literal":
-      if (isNextToken("selector") && tokens[i + 2].type != "selector") {
-        i++;
-        const expr = getExpression();
-        if (typeof expr === "undefined") {
-          return getHint();
+        const expr = this.getExpression()
+        if (expr === undefined) {
+          return this.getHint()
         }
 
         return {
-          type: "literal",
-          kind: "float",
-          // mantissa and abscissa
-          value: parseFloat(tok.value + "." + expr.value)
+          type: "expression",
+          kind: "bin_op",
+          value: this.tokens[this.index].value,
+          left: term,
+          right: expr
         };
       }
 
-      return tok;
+      return term;
+    }
 
-    case "unary":
-      const notExpr = getExpression();
-      if (notExpr == undefined) {
-        return getHint();
-      }
+    this.getTerm = function () {
+      const factor = this.getFactor();
+      const tok = this.tokens[this.index];
 
-      return {
-        type: "expression",
-        kind: "not",
-        value: notExpr
-      };
+      if (this.isNextToken("pri_op")) {
+        this.index++;
 
-    case "ident":
-      if (isNextToken("lparen")) {
-        return getFunctionCall();
-      }
+        const expr = this.getExpression()
+        if (expr === undefined) {
+          return this.getHint()
+        }
 
-      if (isNextToken("lbracket")) {
         return {
-          type: "selector",
-          ident: tok.value,
-          selection: getBracketSelector()
+          type: "expression",
+          kind: "bin_op",
+          value: tok.value,
+          left: factor,
+          right: expr
+        };
+      } else if (this.isNextToken("comparator")) {
+        this.index++;
+
+        const expr = this.getExpression()
+        if (expr === undefined) {
+          return this.getHint()
+        }
+
+        return {
+          type: "expression",
+          kind: "comp_op",
+          value: tok.value,
+          left: factor,
+          right: expr
+        };
+      } else if (
+        (this.isNextToken("assign") ||
+          (this.isNextToken("unary") && this.isNextTokenValue("!"))) &&
+        this.isNextToken("assign", 2)
+      ) {
+        this.index++;
+        this.index++;
+
+        const expr = this.getExpression()
+        if (expr === undefined) {
+          return this.getHint()
+        }
+
+        return {
+          type: "expression",
+          kind: "comp_op",
+          value: this.tokens[this.index - 1].value + this.tokens[this.index].value,
+          left: factor,
+          right: expr
         };
       }
 
-      if (!isNextToken("selector") && !isNextToken("lbracket")) {
-        return tok;
-      }
-      i++;
+      return factor;
+    }
 
-    case "selector":
+    this.getFactor = function () {
+      const tok = this.tokens[this.index];
+      let expr
+
+      // Literal and Ident are the ground states
+      switch (tok.type) {
+        case "literal":
+          if (this.isNextToken("selector") && this.tokens[this.index + 2].type != "selector") {
+            this.index++;
+            expr = this.getExpression();
+            if (typeof expr === undefined) {
+              return this.getHint()
+            }
+
+            return {
+              type: "literal",
+              kind: "float",
+              // mantissa and abscissa
+              value: parseFloat(tok.value + "." + expr.value)
+            };
+          }
+
+          return tok;
+
+        case "unary":
+          const notExpr = this.getExpression();
+          if (notExpr == undefined) {
+            return this.getHint();
+          }
+
+          return {
+            type: "expression",
+            kind: "not",
+            value: notExpr
+          };
+
+        case "ident":
+          if (this.isNextToken("lparen")) {
+            return this.getFunctionCall();
+          }
+
+          if (this.isNextToken("lbracket")) {
+            return {
+              type: "selector",
+              ident: tok.value,
+              selection: this.getBracketSelector()
+            };
+          }
+
+          if (!this.isNextToken("selector") && !this.isNextToken("lbracket")) {
+            return tok;
+          }
+          this.index++;
+
+        case "selector":
+          expr = this.getExpression()
+          if (expr === undefined) {
+            return this.getHint()
+          }
+
+          return {
+            type: "selector",
+            ident: tok.value,
+            selection: expr
+          };
+
+        case "lparen":
+          expr = this.getExpression();
+          if (expr === undefined) {
+            return this.getHint()
+          }
+
+          if (this.isNextToken("rparen")) {
+            this.index++;
+            return expr;
+          }
+
+          this.index++;
+          return this.getHint();
+
+        case "lbracket":
+          return this.getArray();
+
+        case "lbrace":
+          return this.getBlock();
+
+        case "quote":
+          return this.getString();
+
+        default:
+          return this.getHint();
+      }
+    }
+
+    this.getAssignment = function () {
+      const tok = this.tokens[this.index];
+
+      if (!this.isNextToken("assign")) {
+        return this.getHint();
+      }
+
+      this.index++;
+
+      const expr = this.getExpression();
+      if (expr === undefined) {
+        return this.getHint()
+      }
+
       return {
-        type: "selector",
+        type: "assignment",
         ident: tok.value,
-        selection: getExpression()
+        value: expr
       };
-
-    case "lparen":
-      const expr = getExpression();
-      if (isNextToken("rparen")) {
-        i++;
-        return expr;
-      }
-
-      i++;
-      return getHint();
-
-    case "lbracket":
-      return getArray();
-
-    case "lbrace":
-      return getBlock();
-
-    case "quote":
-      return getString();
-
-    default:
-      return getHint();
-  }
-}
-
-function getAssignment() {
-  const tok = tokens[i];
-
-  if (!isNextToken("assign")) {
-    return getHint();
-  }
-
-  i++;
-
-  const expr = getExpression();
-
-  return {
-    type: "assignment",
-    ident: tok.value,
-    value: expr
-  };
-}
-
-// ( `let` | `var` ) IDENT `=` EXPRESSION
-function getDeclarationStatement(infer, kind = tokens[i]) {
-  if (tokens[i].value == "function") {
-    return getFunction();
-  }
-
-  i++;
-
-  const tok = tokens[i];
-
-  if (i < tokens.length && tok.type != "ident") {
-    return getHint();
-  }
-
-  i++;
-  if (i < tokens.length && tokens[i].type != "assign") {
-    return getHint();
-  }
-
-  return {
-    type: "declaration",
-    infer: infer,
-    kind: kind,
-    ident: tok.value,
-    value: getExpression()
-  };
-}
-
-function getArray() {
-  var expressions = [];
-
-  while (i < tokens.length - 1 && tokens[i + 1].type != "rbracket") {
-    var expr = getExpression();
-    if (expr === undefined) {
-      return getHint();
     }
 
-    expressions.push(expr);
-  }
+    // ( `let` | `var` ) IDENT `=` EXPRESSION
+    this.getDeclarationStatement = function (infer, kind = this.tokens[this.index]) {
+      if (this.tokens[this.index].value == "function") {
+        return this.getFunction();
+      }
 
-  i++;
+      this.index++;
 
-  return {
-    type: "literal",
-    kind: "array",
-    value: expressions
-  };
-}
+      const tok = this.tokens[this.index];
 
-function getArrayLength(type) {
-  i++;
-  const expr = getExpression();
-  i++;
+      if (this.index < this.tokens.length && tok.type != "ident") {
+        return this.getHint();
+      }
 
-  return {
-    type: `${type}[]`,
-    length: expr
-  };
-}
+      this.index++;
+      if (this.index < this.tokens.length && this.tokens[this.index].type != "assign") {
+        return this.getHint();
+      }
 
-function getBracketSelector() {
-  const ident = tokens[i];
-  i++;
-  const expr = getExpression();
-  i++;
+      const expr = this.getExpression()
+      if (expr === undefined) {
+        return this.getHint()
+      }
 
-  if (isNextToken("selector")) {
-    i++;
-    i++;
-    const fact = getFactor();
-    return {
-      type: "selection",
-      ident,
-      selection: {
+      return {
+        type: "declaration",
+        infer: infer,
+        kind: kind,
+        ident: tok.value,
+        value: expr
+      };
+    }
+
+    this.getArray = function () {
+      var expressions = [];
+
+      while (this.index < this.tokens.length - 1 && this.tokens[this.index + 1].type != "rbracket") {
+        const expr = this.getExpression();
+        if (expr === undefined) {
+          return this.getHint();
+        }
+
+        expressions.push(expr);
+      }
+
+      this.index++;
+
+      return {
+        type: "literal",
+        kind: "array",
+        value: expressions
+      };
+    }
+
+    this.getArrayLength = function (type) {
+      this.index++;
+      const expr = this.getExpression();
+      if (expr === undefined) {
+        return this.getHint()
+      }
+
+      this.index++;
+
+      return {
+        type: `${type}[]`,
+        length: expr
+      };
+    }
+
+    this.getBracketSelector = function () {
+      const ident = this.tokens[this.index];
+      this.index++;
+      const expr = this.getExpression();
+      if (expr === undefined) {
+        return this.getHint()
+      }
+
+      this.index++;
+
+      if (this.isNextToken("selector")) {
+        this.index++;
+        this.index++;
+        const fact = this.getFactor();
+        return {
+          type: "selection",
+          ident,
+          selection: {
+            type: "selector",
+            ident: expr,
+            selection: fact
+          }
+        };
+      }
+
+      return {
         type: "selector",
         ident: expr,
-        selection: fact
-      }
-    };
-  }
-
-  return {
-    type: "selector",
-    ident: expr,
-    selection: expr
-  };
-}
-
-function getBlock() {
-  var statements = [];
-
-  i++;
-  while (i < tokens.length - 1 && tokens[i].type != "rbrace") {
-    var stmt = getStatement();
-    if (stmt === undefined) {
-      return getHint();
+        selection: expr
+      };
     }
 
-    statements.push(stmt);
-    i++;
-  }
+    this.getBlock = function () {
+      var statements = [];
 
-  return {
-    type: "literal",
-    kind: "block",
-    value: statements
-  };
-}
+      this.index++;
+      while (this.index < this.tokens.length - 1 && this.tokens[this.index].type != "rbrace") {
+        var stmt = this.getStatement();
+        if (stmt === undefined) {
+          return this.getHint();
+        }
 
-function getReturn() {
-  return {
-    type: "return",
-    value: getExpression()
-  };
-}
-
-function getString() {
-  var string = "";
-
-  i++;
-  while (i < tokens.length - 1 && tokens[i].type != "quote") {
-    string += tokens[i].value;
-
-    i++;
-  }
-
-  return {
-    type: "literal",
-    kind: "string",
-    value: string
-  };
-}
-
-// TODO: add some fucking error checking
-function getLoop() {
-  const loop = {
-    kind: tokens[i].value
-  };
-
-  const expr = getExpression();
-
-  // skip over the .. (2 selectors) for now
-  i++;
-  i++;
-
-  const expr1 = getExpression();
-  console.log("stuff", expr, expr1);
-
-  loop.start = expr;
-  loop.end = expr1;
-  loop.step = 1;
-
-  i++;
-
-  loop.block = getBlock();
-
-  return loop;
-}
-
-// TODO: add some fucking error checking
-function getControl() {
-  const tok = tokens[i];
-
-  let expr;
-  switch (tok.value) {
-    case "if":
-      expr = getExpression();
-      break;
-
-    case "else":
-      if (isNextTokenValue("if")) {
-        i++;
-        return getControl();
+        statements.push(stmt);
+        this.index++;
       }
 
-      break;
-
-    default:
-      return getHint();
-  }
-
-  i++;
-  const body = getBlock();
-
-  return {
-    condition: expr,
-    body
-  };
-}
-
-// TODO: implement some fucking error checking
-function getFunction() {
-  var returnTypes = [];
-
-  i++;
-  const ident = tokens[i];
-
-  if (ident.type !== "ident") {
-    return getHint();
-  }
-
-  if (!isNextToken("lparen")) {
-    return getHint();
-  }
-
-  var args = [];
-
-  i++;
-  i++;
-
-  // args
-  while (tokens[i].type !== "rparen") {
-    if (tokens[i].type !== "type" || !isNextToken("ident")) {
-      return getHint();
+      return {
+        type: "literal",
+        kind: "block",
+        value: statements
+      };
     }
 
-    const kind = tokens[i].value;
-    i++;
+    this.getReturn = function () {
+      const expr = this.getExpression()
+      if (expr === undefined) {
+        return this.getHint()
+      }
 
-    const argIdent = tokens[i].value;
-    i++;
+      return {
+        type: "return",
+        value: expr
+      };
+    }
 
-    args.push({
-      type: "ident",
-      kind,
-      value: argIdent
-    });
-  }
+    this.getString = function () {
+      var string = "";
 
-  if (isNextTokenValue("-") && isNextTokenValue(">", 2)) {
-    // @TODO do stuff with return types
-    i++;
-    i++;
+      this.index++;
+      while (this.index < this.tokens.length - 1 && this.tokens[this.index].type != "quote") {
+        string += this.tokens[this.index].value;
 
-    while (isNextToken("type")) {
-      i++;
-      const type = tokens[i];
-      returnTypes.push(type);
+        this.index++;
+      }
+
+      return {
+        type: "literal",
+        kind: "string",
+        value: string
+      };
+    }
+
+    // TODO: add some fucking error checking
+    this.getLoop = function () {
+      const loop = {
+        kind: this.tokens[this.index].value
+      };
+
+      const expr = this.getExpression();
+      if (expr === undefined) {
+        return this.getHint()
+      }
+
+      // skip over the .. (2 selectors) for now
+      this.index++;
+      this.index++;
+
+      const expr1 = this.getExpression();
+      if (expr1 === undefined) {
+        return this.getHint()
+      }
+
+      loop.start = expr;
+      loop.end = expr1;
+      loop.step = 1;
+
+      this.index++;
+
+      loop.block = this.getBlock();
+
+      return loop;
+    }
+
+    // TODO: add some fucking error checking
+    this.getControl = function () {
+      let expr;
+      switch (this.tokens[this.index].value) {
+        case "if":
+          expr = this.getExpression();
+          if (expr === undefined) {
+            return this.getHint()
+          }
+          break;
+
+        case "else":
+          if (this.isNextTokenValue("if")) {
+            this.index++;
+            return this.getControl();
+          }
+          break;
+
+        default:
+          return this.getHint();
+      }
+
+      this.index++;
+
+
+
+      const body = this.getBlock()
+      const ret = {
+        body
+      }
+
+      if (expr === undefined) {
+        expr = {
+          type: 'literal',
+          kind: 'bool',
+          value: true
+        }
+      }
+
+      ret.condition = expr
+
+      return ret
+    }
+
+    // TODO: implement some fucking error checking
+    this.getFunction = function () {
+      var returnTypes = [];
+
+      this.index++;
+      const ident = this.tokens[this.index];
+
+      if (ident.type !== "ident") {
+        return this.getHint();
+      }
+
+      if (!this.isNextToken("lparen")) {
+        return this.getHint();
+      }
+
+      var args = [];
+
+      this.index++;
+      this.index++;
+
+      // args
+      while (this.tokens[this.index].type !== "rparen") {
+        if (this.tokens[this.index].type !== "type" || !this.isNextToken("ident")) {
+          return this.getHint();
+        }
+
+        const kind = this.tokens[this.index].value;
+        this.index++;
+
+        const argIdent = this.tokens[this.index].value;
+        this.index++;
+
+        args.push({
+          type: "ident",
+          kind,
+          value: argIdent
+        });
+      }
+
+      if (this.isNextTokenValue("-") && this.isNextTokenValue(">", 2)) {
+        // @TODO do stuff with return types
+        this.index++;
+        this.index++;
+
+        while (this.isNextToken("type")) {
+          this.index++;
+          const type = this.tokens[this.index];
+          returnTypes.push(type);
+        }
+      }
+      this.index++;
+
+      if (this.tokens[this.index].type !== "lbrace") {
+        return this.getHint();
+      }
+
+      // body
+      const body = this.getBlock();
+
+      return {
+        type: "declaration",
+        kind: "function",
+        ident: ident.value,
+        args: args,
+        returns: returnTypes,
+        body: body
+      };
+    }
+
+    this.getFunctionCall = function () {
+      const ident = this.tokens[this.index];
+      this.index++
+
+      let params = [];
+
+      while (!this.isNextToken("rparen")) {
+        const expr = this.getExpression();
+        if (expr === undefined) {
+          return this.getHint()
+        }
+
+        params.push(expr);
+      }
+      this.index++
+
+      return {
+        type: "call",
+        ident,
+        params
+      };
+    }
+
+    this.getHint = function () {
+      const firstSource = this.tokens
+        .slice(i - 5, i)
+        .map(v => v.value)
+        .join("");
+
+      const lastSource = this.tokens
+        .slice(i, i + 5)
+        .map(v => v.value)
+        .join("");
+
+      const source = firstSource + lastSource;
+
+      const err = new Error("");
+
+      const stack = err.stack
+        .split(/\n/)
+        .slice(2)
+        .map(v => v.trim().split(/\s+/)[1]);
+
+      const hint = `${source}\n${" ".repeat(firstSource.length)}^`;
+      const curFun = stack.shift();
+
+      // @TODO: start we need to break in other areas
+      console.error(`\n${curFun}\n\n${hint}`);
+      console.error(this.tokens[this.index]);
+      console.error(stack);
+      process.exit(9);
+      // @TODO: end we need to break in other areas
+
+      return {
+        type: "error",
+        msg: `Not implemented in ${curFun}`,
+        hint,
+        stack
+      };
+    }
+
+    this.isNextToken = function (type, offset = 1) {
+      return this.index < this.tokens.length - offset && this.tokens[this.index + offset].type == type;
+    }
+
+    this.isNextTokenValue = function (value, offset = 1) {
+      return this.index < this.tokens.length - offset && this.tokens[this.index + offset].value == value;
     }
   }
-  i++;
-
-  if (tokens[i].type !== "lbrace") {
-    return getHint();
-  }
-
-  // body
-  const body = getBlock();
-
-  return {
-    type: "declaration",
-    kind: "function",
-    ident: ident.value,
-    args: args,
-    returns: returnTypes,
-    body: body
-  };
-}
-
-// function getFunctionArgs() {
-//   if (!isNextToken("lparen")) {
-//     return getHint();
-//   }
-
-//   var args = [];
-
-//   i++
-//   i++
-
-//   // args
-//   while (tokens[i].type !== "rparen") {
-//     console.log("i am hereeeee")
-//     const expr2 = getExpression()
-//     args.push(expr2)
-//   }
-//   console.log("args", args)
-
-//   return args;
-// }
-
-function getFunctionCall() {
-  const ident = tokens[i];
-  i++
-
-  let params = [];
-
-  while (!isNextToken("rparen")) {
-    const param = getExpression();
-    params.push(param);
-  }
-  i++
-
-  return {
-    type: "call",
-    ident,
-    params
-  };
-}
-
-function getHint() {
-  const firstSource = tokens
-    .slice(i - 5, i)
-    .map(v => v.value)
-    .join("");
-
-  const lastSource = tokens
-    .slice(i, i + 5)
-    .map(v => v.value)
-    .join("");
-
-  const source = firstSource + lastSource;
-
-  const err = new Error("");
-
-  const stack = err.stack
-    .split(/\n/)
-    .slice(2)
-    .map(v => v.trim().split(/\s+/)[1]);
-
-  const hint = `${source}\n${" ".repeat(firstSource.length)}^`;
-  const curFun = stack.shift();
-
-  // @TODO: start we need to break in other areas
-  console.error(`\n${curFun}\n\n${hint}`);
-  console.error(tokens[i]);
-  console.error(stack);
-  process.exit(9);
-  // @TODO: end we need to break in other areas
-
-  return {
-    type: "error",
-    msg: `Not implemented in ${curFun}`,
-    hint,
-    stack
-  };
-}
-
-function isNextToken(type, offset = 1) {
-  return i < tokens.length - offset && tokens[i + offset].type == type;
-}
-
-function isNextTokenValue(value, offset = 1) {
-  return i < tokens.length - offset && tokens[i + offset].value == value;
 }

@@ -1,0 +1,146 @@
+[
+  {
+    "type": "control",
+    "value": "if"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "unary",
+    "value": "!"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "control",
+    "value": "else"
+  },
+  {
+    "type": "control",
+    "value": "if"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 2
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "comparator",
+    "value": ">"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 10
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 12
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "control",
+    "value": "else"
+  },
+  {
+    "type": "control",
+    "value": "if"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "comparator",
+    "value": ">"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 3
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 12
+  },
+  {
+    "type": "comparator",
+    "value": "<"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 3
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "control",
+    "value": "else"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  }
+]

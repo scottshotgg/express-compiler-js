@@ -1,0 +1,91 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "kind": "function",
+      "ident": "something",
+      "args": [
+        {
+          "type": "ident",
+          "kind": "int",
+          "value": "a"
+        },
+        {
+          "type": "ident",
+          "kind": "int",
+          "value": "b"
+        }
+      ],
+      "returns": [],
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "ident",
+              "value": "b"
+            }
+          },
+          {
+            "type": "return",
+            "value": {
+              "type": "ident",
+              "value": "a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "ident": {
+        "type": "ident",
+        "value": "something"
+      },
+      "params": []
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "selector",
+        "ident": "something",
+        "selection": {
+          "type": "call",
+          "ident": {
+            "type": "ident",
+            "value": "foo"
+          },
+          "params": [
+            {
+              "type": "ident",
+              "value": "a"
+            },
+            {
+              "type": "ident",
+              "value": "b"
+            },
+            {
+              "type": "ident",
+              "value": "c"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

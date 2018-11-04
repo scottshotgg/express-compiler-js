@@ -1,0 +1,130 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": []
+      },
+      "condition": {
+        "type": "expression",
+        "kind": "comp_op",
+        "value": "=b",
+        "left": {
+          "type": "ident",
+          "value": "a"
+        },
+        "right": {
+          "type": "ident",
+          "value": "b"
+        }
+      }
+    },
+    {
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": []
+      },
+      "condition": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": 12,
+        "left": {
+          "type": "literal",
+          "kind": "int",
+          "value": 2
+        },
+        "right": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 12,
+          "left": {
+            "type": "ident",
+            "value": "i"
+          },
+          "right": {
+            "type": "expression",
+            "kind": "comp_op",
+            "value": 5,
+            "left": {
+              "type": "literal",
+              "kind": "int",
+              "value": 5
+            },
+            "right": {
+              "type": "expression",
+              "kind": "bin_op",
+              "value": 12,
+              "left": {
+                "type": "literal",
+                "kind": "int",
+                "value": 10
+              },
+              "right": {
+                "type": "literal",
+                "kind": "int",
+                "value": 12
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": []
+      },
+      "condition": {
+        "type": "expression",
+        "kind": "comp_op",
+        "value": 5,
+        "left": {
+          "type": "literal",
+          "kind": "int",
+          "value": 5
+        },
+        "right": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 3,
+          "left": {
+            "type": "literal",
+            "kind": "int",
+            "value": 3
+          },
+          "right": {
+            "type": "expression",
+            "kind": "comp_op",
+            "value": 12,
+            "left": {
+              "type": "literal",
+              "kind": "int",
+              "value": 12
+            },
+            "right": {
+              "type": "literal",
+              "kind": "int",
+              "value": 3
+            }
+          }
+        }
+      }
+    },
+    {
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": []
+      },
+      "condition": {
+        "type": "literal",
+        "kind": "bool",
+        "value": true
+      }
+    }
+  ]
+}

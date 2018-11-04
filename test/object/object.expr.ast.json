@@ -1,0 +1,30 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "obj2",
+      "value": {
+        "type": "selector",
+        "ident": "obj",
+        "selection": {
+          "type": "selector",
+          "ident": "a",
+          "selection": {
+            "type": "selector",
+            "ident": "b",
+            "selection": {
+              "type": "ident",
+              "value": "c"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

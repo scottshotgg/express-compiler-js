@@ -1,0 +1,339 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "kind": "function",
+      "ident": "something",
+      "args": [
+        {
+          "type": "ident",
+          "kind": "int",
+          "value": "a"
+        },
+        {
+          "type": "ident",
+          "kind": "int",
+          "value": "b"
+        }
+      ],
+      "returns": [],
+      "body": {
+        "type": "literal",
+        "kind": "block",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "ident",
+              "value": "b"
+            }
+          },
+          {
+            "type": "return",
+            "value": {
+              "type": "ident",
+              "value": "a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "ident": {
+        "type": "ident",
+        "value": "something"
+      },
+      "params": [
+        {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 18,
+          "left": {
+            "type": "literal",
+            "kind": "int",
+            "value": 17
+          },
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 18
+          }
+        },
+        {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": "b",
+          "left": {
+            "type": "ident",
+            "value": "a"
+          },
+          "right": {
+            "type": "ident",
+            "value": "b"
+          }
+        }
+      ]
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "something",
+      "value": {
+        "type": "literal",
+        "kind": "array",
+        "value": [
+          {
+            "type": "ident",
+            "value": "a,"
+          },
+          {
+            "type": "ident",
+            "value": "b,"
+          },
+          {
+            "type": "ident",
+            "value": "c"
+          }
+        ]
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "selector",
+        "ident": "something",
+        "selection": {
+          "type": "selector",
+          "ident": {
+            "type": "literal",
+            "kind": "int",
+            "value": 0
+          },
+          "selection": {
+            "type": "literal",
+            "kind": "int",
+            "value": 0
+          }
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "selector",
+        "ident": "something",
+        "selection": {
+          "type": "selector",
+          "ident": {
+            "type": "ident",
+            "value": "\"sdfklsdjklf\""
+          },
+          "selection": {
+            "type": "ident",
+            "value": "\"sdfklsdjklf\""
+          }
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "selector",
+        "ident": "something",
+        "selection": {
+          "type": "selector",
+          "ident": {
+            "type": "expression",
+            "kind": "comp_op",
+            "value": "=1",
+            "left": {
+              "type": "literal",
+              "kind": "int",
+              "value": 0
+            },
+            "right": {
+              "type": "literal",
+              "kind": "int",
+              "value": 1
+            }
+          },
+          "selection": {
+            "type": "expression",
+            "kind": "comp_op",
+            "value": "=1",
+            "left": {
+              "type": "literal",
+              "kind": "int",
+              "value": 0
+            },
+            "right": {
+              "type": "literal",
+              "kind": "int",
+              "value": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "b",
+      "value": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": 2,
+        "left": {
+          "type": "selector",
+          "ident": "something",
+          "selection": {
+            "type": "selection",
+            "ident": {
+              "type": "ident",
+              "value": "something"
+            },
+            "selection": {
+              "type": "selector",
+              "ident": {
+                "type": "literal",
+                "kind": "int",
+                "value": 9
+              },
+              "selection": {
+                "type": "ident",
+                "value": "a"
+              }
+            }
+          }
+        },
+        "right": {
+          "type": "literal",
+          "kind": "int",
+          "value": 2
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "b",
+      "value": {
+        "type": "expression",
+        "kind": "bin_op",
+        "value": 2,
+        "left": {
+          "type": "selector",
+          "ident": "something",
+          "selection": {
+            "type": "selector",
+            "ident": {
+              "type": "selector",
+              "ident": "x",
+              "selection": {
+                "type": "selector",
+                "ident": {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 0
+                },
+                "selection": {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 0
+                }
+              }
+            },
+            "selection": {
+              "type": "selector",
+              "ident": "x",
+              "selection": {
+                "type": "selector",
+                "ident": {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 0
+                },
+                "selection": {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 0
+                }
+              }
+            }
+          }
+        },
+        "right": {
+          "type": "literal",
+          "kind": "int",
+          "value": 2
+        }
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "literal",
+        "kind": "bool",
+        "value": false
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "b",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 2
+      }
+    }
+  ]
+}

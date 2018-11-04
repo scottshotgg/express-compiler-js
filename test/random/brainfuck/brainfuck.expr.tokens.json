@@ -1,0 +1,122 @@
+[
+  {
+    "type": "declaration",
+    "value": "function"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "return",
+    "value": "return"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "foo"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  }
+]

@@ -1,0 +1,163 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": {
+        "type": "string[]",
+        "length": {
+          "type": "ident",
+          "value": "i"
+        }
+      },
+      "ident": "a",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 8
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": {
+        "type": "string[]",
+        "length": {
+          "type": "expression",
+          "kind": "bin_op",
+          "value": 1,
+          "left": {
+            "type": "ident",
+            "value": "i"
+          },
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 1
+          }
+        }
+      },
+      "ident": "b",
+      "value": {
+        "type": "ident",
+        "value": "a"
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": {
+        "type": "object[]",
+        "length": {
+          "type": "call",
+          "ident": {
+            "type": "ident",
+            "value": "something"
+          },
+          "params": [
+            {
+              "type": "literal",
+              "kind": "int",
+              "value": 14
+            }
+          ]
+        }
+      },
+      "ident": "b",
+      "value": {
+        "type": "ident",
+        "value": "q"
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "a",
+      "value": {
+        "type": "literal",
+        "kind": "float",
+        "value": 7.62
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "obj",
+      "value": {
+        "type": "literal",
+        "kind": "block",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "literal",
+              "kind": "array",
+              "value": [
+                {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 7
+                },
+                {
+                  "type": "literal",
+                  "kind": "float",
+                  "value": 3.34
+                }
+              ]
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "b",
+            "value": {
+              "type": "literal",
+              "kind": "float",
+              "value": 8.94
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "c",
+            "value": {
+              "type": "ident",
+              "value": "\"something\""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "assignment",
+      "ident": "obj",
+      "value": {
+        "type": "ident",
+        "value": "foo"
+      }
+    }
+  ]
+}

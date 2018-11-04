@@ -1,0 +1,28 @@
+[
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "f"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 6
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 6666667
+  }
+]

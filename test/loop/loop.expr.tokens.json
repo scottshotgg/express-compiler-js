@@ -1,0 +1,86 @@
+[
+  {
+    "type": "loop",
+    "value": "for"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 1
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 10
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 8
+  },
+  {
+    "type": "loop",
+    "value": "for"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 1
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "obj"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  }
+]
