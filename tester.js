@@ -5,6 +5,20 @@ const lexer = require('./lexer.js')
 const parser = require('./parser.js')
 
 const argv = require('yargs').argv
+var colors = require('colors');
+
+colors.setTheme({
+  silly: 'rainbow',
+  input: 'grey',
+  verbose: 'cyan',
+  prompt: 'grey',
+  info: 'green',
+  data: 'grey',
+  help: 'cyan',
+  warn: 'yellow',
+  debug: 'blue',
+  error: 'red'
+});
 
 // Grab the filename from the first arg and fallback to the arg
 const TEST_PATH = argv['_'][0] || argv['path']
@@ -23,26 +37,27 @@ var results = {
   failed: 0,
   untestable: 0,
   total: 0,
+  files: {}
 }
 
 function testDir(path) {
   const dir = fs.readdirSync(path)
 
-  for (d of dir) {
+  dir.map((d) => {
     if (d != "_") {
       const localPath = path + '/' + d
       if (fs.statSync(localPath).isFile()) {
         if (localPath.split('.').length < 3) {
-          console.log()
           // console.log('Testing: \x1b[47m\x1b[30m%s\x1b[0m', localPath)
-          console.log('Testing: ' + localPath)
           results.total += 2
+          results.files[localPath] = {}
 
           const filedata = fs.readFileSync(localPath).toString()
           if (filedata === undefined) {
-            results.untestable++
             console.log(localPath + "did not contain any data")
-            continue
+            results.files[localPath] = undefined
+            results.untestable++
+            return
           }
 
           const tokens = new lexer(filedata).lex(filedata)
@@ -51,16 +66,17 @@ function testDir(path) {
           var currentFile = fs.readFileSync(tokenFile)
           if (currentFile === undefined) {
             console.log(tokenFile + ' was empty! Writing file ...')
+            results.files[localPath]['tokens'] = 'untestable'
             results.untestable++
             fs.writeFileSync(tokenFile, JSON.stringify(tokens, null, 2))
-            continue
+            return
           }
 
           if (currentFile != JSON.stringify(tokens, null, 2)) {
-            console.log('tokens: \x1b[31m%s\x1b[0m', 'failed ✗')
+            results.files[localPath]['tokens'] = 'failed'
             results.failed++
           } else {
-            console.log('tokens: \x1b[32m%s\x1b[0m', 'passed ✓')
+            results.files[localPath]['tokens'] = 'passed'
             results.passed++
           }
 
@@ -70,16 +86,17 @@ function testDir(path) {
           var currentFile = fs.readFileSync(astFile)
           if (currentFile === undefined) {
             console.log(astFile + ' was empty! Writing file ...')
+            results.files[localPath]['ast'] = 'untestable'
             results.untestable++
             fs.writeFileSync(astFile, JSON.stringify(ast, null, 2))
-            continue
+            return
           }
 
           if (currentFile != JSON.stringify(ast, null, 2)) {
-            console.log('ast:    \x1b[31m%s\x1b[0m', 'failed ✗')
+            results.files[localPath]['ast'] = 'failed'
             results.failed++
           } else {
-            console.log('ast:    \x1b[32m%s\x1b[0m', 'passed ✓')
+            results.files[localPath]['ast'] = 'passed'
             results.passed++
           }
         }
@@ -87,10 +104,41 @@ function testDir(path) {
         testDir(localPath)
       }
     }
-  }
+  })
 }
 
-console.log('Using tests from: \x1b[47m\x1b[30m%s\x1b[0m', TEST_PATH)
-testDir(TEST_PATH)
+console.log('Running tests from: '.bold + TEST_PATH.white.inverse)
 console.log()
-console.log('Results: ' + util.inspect(results, { depth: null, colors: true }))
+
+testDir(TEST_PATH)
+
+for (test in results.files) {
+  console.log(test.underline)
+  if (test === undefined) {
+    console.log('Could not test')
+  }
+
+  for (stage in results.files[test]) {
+    if (results.files[test][stage] == 'passed') {
+      console.log(stage.padEnd(7).bold + ': ' + 'passed ✓'.info)
+    } else {
+      console.log(stage.padEnd(7).bold + ': ' + 'failed ✗'.error)
+    }
+  }
+
+  console.log()
+}
+
+console.log('------------------------')
+
+console.log()
+console.log('Results:\n'.underline.bold)
+const len = results.total.toString().length
+console.log('Passed'.green + ': %s (%s / %d)', ((results.passed / results.total * 100).toString() + '%').padStart(4), results.passed.toString().padStart(len), results.total)
+console.log('Failed'.red + ': %s (%s / %d)', ((results.failed / results.total * 100).toString() + '%').padStart(4), results.failed.toString().padStart(len), results.total)
+
+if (!results.failed) {
+  console.log('\nOverall: ' + 'passed ✓'.info)
+} else {
+  console.log('\nOverall: ' + 'failed ✗'.error)
+}
