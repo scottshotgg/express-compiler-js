@@ -183,8 +183,16 @@
     "value": "["
   },
   {
+    "type": "quote",
+    "value": "\""
+  },
+  {
     "type": "ident",
-    "value": "\"sdfklsdjklf\""
+    "value": "sdfklsdjklf"
+  },
+  {
+    "type": "quote",
+    "value": "\""
   },
   {
     "type": "rbracket",

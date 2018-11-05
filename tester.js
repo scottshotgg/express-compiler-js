@@ -63,16 +63,12 @@ function testDir(path) {
           const tokens = new lexer(filedata).lex(filedata)
           // check tokens file
           const tokenFile = localPath + '.tokens.json'
-          var currentFile = fs.readFileSync(tokenFile)
-          if (currentFile === undefined) {
-            console.log(tokenFile + ' was empty! Writing file ...')
-            results.files[localPath]['tokens'] = 'untestable'
+          var currentFile = fs.existsSync(tokenFile) && fs.readFileSync(tokenFile)
+          if (!fs.existsSync(tokenFile) || currentFile === undefined || argv['regen']) {
+            results.files[localPath]['tokens'] = 'empty'
             results.untestable++
             fs.writeFileSync(tokenFile, JSON.stringify(tokens, null, 2))
-            return
-          }
-
-          if (currentFile != JSON.stringify(tokens, null, 2)) {
+          } else if (currentFile != JSON.stringify(tokens, null, 2)) {
             results.files[localPath]['tokens'] = 'failed'
             results.failed++
           } else {
@@ -83,16 +79,12 @@ function testDir(path) {
           const ast = new parser(tokens).buildAST()
           // check the ast file
           const astFile = localPath + '.ast.json'
-          var currentFile = fs.readFileSync(astFile)
-          if (currentFile === undefined) {
-            console.log(astFile + ' was empty! Writing file ...')
+          var currentFile = fs.existsSync(astFile) && fs.readFileSync(astFile)
+          if (!fs.existsSync(astFile) || currentFile === undefined || argv['regen']) {
             results.files[localPath]['ast'] = 'untestable'
             results.untestable++
             fs.writeFileSync(astFile, JSON.stringify(ast, null, 2))
-            return
-          }
-
-          if (currentFile != JSON.stringify(ast, null, 2)) {
+          } else if (currentFile != JSON.stringify(ast, null, 2)) {
             results.files[localPath]['ast'] = 'failed'
             results.failed++
           } else {
@@ -121,8 +113,10 @@ for (test in results.files) {
   for (stage in results.files[test]) {
     if (results.files[test][stage] == 'passed') {
       console.log(stage.padEnd(7).bold + ': ' + 'passed ✓'.info)
-    } else {
+    } else if (results.files[test][stage] == 'failed') {
       console.log(stage.padEnd(7).bold + ': ' + 'failed ✗'.error)
+    } else {
+      console.log(stage.padEnd(7).bold + ': generated'.warn)
     }
   }
 
@@ -134,8 +128,8 @@ console.log('------------------------')
 console.log()
 console.log('Results:\n'.underline.bold)
 const len = results.total.toString().length
-console.log('Passed'.green + ': %s (%s / %d)', ((results.passed / results.total * 100).toString() + '%').padStart(4), results.passed.toString().padStart(len), results.total)
-console.log('Failed'.red + ': %s (%s / %d)', ((results.failed / results.total * 100).toString() + '%').padStart(4), results.failed.toString().padStart(len), results.total)
+console.log('Passed'.green + ': %s (%s / %d)', (Math.round((results.passed / results.total * 100), 3).toString() + '%').padStart(4), results.passed.toString().padStart(len), results.total)
+console.log('Failed'.red + ': %s (%s / %d)', (Math.round((results.failed / results.total * 100), 3).toString() + '%').padStart(4), results.failed.toString().padStart(len), results.total)
 
 if (!results.failed) {
   console.log('\nOverall: ' + 'passed ✓'.info)

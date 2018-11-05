@@ -94,9 +94,9 @@ const lexemes = {
     value: ':'
   },
 
-  '\'': {
+  '\"': {
     type: 'quote',
-    value: '\''
+    value: '\"'
   },
   '(': {
     type: 'lparen',
@@ -190,7 +190,7 @@ module.exports = class Lexer {
           if (this.accumulator != '') {
             this.tokens.push(this.lexLit(this.accumulator));
             this.accumulator = '';
-          }
+          }  
 
           this.tokens.push(lexemes[char]);
         } else {
@@ -204,6 +204,35 @@ module.exports = class Lexer {
 
       return this.tokens;
     }
+
+    // this.lex = function (filedata) {
+    //   for (const char of filedata) {
+    //     if (lexemes[this.accumulator]) {
+    //       this.tokens.push(lexemes[this.accumulator])
+    //       this.accumulator = ""
+    //     } else if (char == " " || char == "\n") {
+    //       if (this.accumulator != "") {
+    //         this.tokens.push(this.lexLit(this.accumulator))
+    //       }
+    //       this.accumulator = ""
+    //     } else if (lexemes[char]) {
+    //       if (this.accumulator != "") {
+    //         this.tokens.push(this.lexLit(this.accumulator))
+    //         this.accumulator = ""
+    //       }
+    
+    //       this.tokens.push(lexemes[char])
+    //     } else {
+    //       this.accumulator += char
+    //     }
+    //   }
+    
+    //   if (this.accumulator != "") {
+    //     this.tokens.push(this.lexLit(this.accumulator))
+    //   }
+    
+    //   return this.tokens
+    // }
 
     this.lexLit = function (acc) {
       var literal;

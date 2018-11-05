@@ -1,0 +1,90 @@
+{
+  "type": "program",
+  "statements": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "i",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 7
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "f",
+      "value": {
+        "type": "literal",
+        "kind": "float",
+        "value": 6.6
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "b",
+      "value": {
+        "type": "literal",
+        "kind": "bool",
+        "value": true
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "s",
+      "value": {
+        "type": "literal",
+        "kind": "string",
+        "value": "something"
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "o",
+      "value": {
+        "type": "literal",
+        "kind": "block",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "literal",
+              "kind": "string",
+              "value": "a"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

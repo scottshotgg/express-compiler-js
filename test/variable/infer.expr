@@ -1,0 +1,7 @@
+let i = 7
+let f = 6.6
+let b = true
+let s = "something"
+let o = {
+  let a = "a"
+}

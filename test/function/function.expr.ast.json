@@ -121,17 +121,9 @@
         "type": "selector",
         "ident": "something",
         "selection": {
-          "type": "selector",
-          "ident": {
-            "type": "literal",
-            "kind": "int",
-            "value": 0
-          },
-          "selection": {
-            "type": "literal",
-            "kind": "int",
-            "value": 0
-          }
+          "type": "literal",
+          "kind": "int",
+          "value": 0
         }
       }
     },
@@ -147,15 +139,9 @@
         "type": "selector",
         "ident": "something",
         "selection": {
-          "type": "selector",
-          "ident": {
-            "type": "ident",
-            "value": "\"sdfklsdjklf\""
-          },
-          "selection": {
-            "type": "ident",
-            "value": "\"sdfklsdjklf\""
-          }
+          "type": "literal",
+          "kind": "string",
+          "value": "sdfklsdjklf"
         }
       }
     },
@@ -171,36 +157,18 @@
         "type": "selector",
         "ident": "something",
         "selection": {
-          "type": "selector",
-          "ident": {
-            "type": "expression",
-            "kind": "comp_op",
-            "value": "=1",
-            "left": {
-              "type": "literal",
-              "kind": "int",
-              "value": 0
-            },
-            "right": {
-              "type": "literal",
-              "kind": "int",
-              "value": 1
-            }
+          "type": "expression",
+          "kind": "comp_op",
+          "value": "==",
+          "left": {
+            "type": "literal",
+            "kind": "int",
+            "value": 0
           },
-          "selection": {
-            "type": "expression",
-            "kind": "comp_op",
-            "value": "=1",
-            "left": {
-              "type": "literal",
-              "kind": "int",
-              "value": 0
-            },
-            "right": {
-              "type": "literal",
-              "kind": "int",
-              "value": 1
-            }
+          "right": {
+            "type": "literal",
+            "kind": "int",
+            "value": 1
           }
         }
       }
@@ -218,25 +186,18 @@
         "kind": "bin_op",
         "value": 2,
         "left": {
-          "type": "selector",
+          "type": "selection",
           "ident": "something",
           "selection": {
-            "type": "selection",
+            "type": "selector",
             "ident": {
-              "type": "ident",
-              "value": "something"
+              "type": "literal",
+              "kind": "int",
+              "value": 9
             },
             "selection": {
-              "type": "selector",
-              "ident": {
-                "type": "literal",
-                "kind": "int",
-                "value": 9
-              },
-              "selection": {
-                "type": "ident",
-                "value": "a"
-              }
+              "type": "ident",
+              "value": "a"
             }
           }
         },
@@ -264,39 +225,11 @@
           "ident": "something",
           "selection": {
             "type": "selector",
-            "ident": {
-              "type": "selector",
-              "ident": "x",
-              "selection": {
-                "type": "selector",
-                "ident": {
-                  "type": "literal",
-                  "kind": "int",
-                  "value": 0
-                },
-                "selection": {
-                  "type": "literal",
-                  "kind": "int",
-                  "value": 0
-                }
-              }
-            },
+            "ident": "x",
             "selection": {
-              "type": "selector",
-              "ident": "x",
-              "selection": {
-                "type": "selector",
-                "ident": {
-                  "type": "literal",
-                  "kind": "int",
-                  "value": 0
-                },
-                "selection": {
-                  "type": "literal",
-                  "kind": "int",
-                  "value": 0
-                }
-              }
+              "type": "literal",
+              "kind": "int",
+              "value": 0
             }
           }
         },

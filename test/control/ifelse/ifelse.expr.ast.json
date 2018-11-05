@@ -10,7 +10,7 @@
       "condition": {
         "type": "expression",
         "kind": "comp_op",
-        "value": "=b",
+        "value": "!=",
         "left": {
           "type": "ident",
           "value": "a"

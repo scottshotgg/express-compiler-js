@@ -34,8 +34,6 @@ module.exports = class Parser {
           var type = tok.value;
 
           if (this.isNextToken("lbracket")) {
-            var arrlen = "";
-
             this.index++;
             if (this.isNextToken("rbracket")) {
               type += "[]";
@@ -148,12 +146,6 @@ module.exports = class Parser {
           return this.getHint()
         }
 
-        console.log({
-          expr,
-          factor,
-          value: compValue
-        })
-
         return {
           type: "expression",
           kind: "comp_op",
@@ -208,11 +200,10 @@ module.exports = class Parser {
           }
 
           if (this.isNextToken("lbracket")) {
-            return {
-              type: "selector",
-              ident: tok.value,
-              selection: this.getBracketSelector()
-            };
+            var ret = this.getBracketSelector()
+            ret.ident = tok.value
+            
+            return ret
           }
 
           if (!this.isNextToken("selector") && !this.isNextToken("lbracket")) {
@@ -377,7 +368,7 @@ module.exports = class Parser {
 
       return {
         type: "selector",
-        ident: expr,
+        ident: ident,
         selection: expr
       };
     }
