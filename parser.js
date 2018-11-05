@@ -141,15 +141,23 @@ module.exports = class Parser {
         this.index++;
         this.index++;
 
+        var compValue = this.tokens[this.index - 1].value + this.tokens[this.index].value
+
         const expr = this.getExpression()
         if (expr === undefined) {
           return this.getHint()
         }
 
+        console.log({
+          expr,
+          factor,
+          value: compValue
+        })
+
         return {
           type: "expression",
           kind: "comp_op",
-          value: this.tokens[this.index - 1].value + this.tokens[this.index].value,
+          value: compValue,
           left: factor,
           right: expr
         };
@@ -593,12 +601,12 @@ module.exports = class Parser {
 
     this.getHint = function () {
       const firstSource = this.tokens
-        .slice(i - 5, i)
+        .slice(this.index - 5, this.index)
         .map(v => v.value)
         .join("");
 
       const lastSource = this.tokens
-        .slice(i, i + 5)
+        .slice(this.index, this.index + 5)
         .map(v => v.value)
         .join("");
 
