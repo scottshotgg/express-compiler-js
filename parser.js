@@ -98,11 +98,12 @@ module.exports = class Parser {
     }
 
     this.getTerm = function () {
+      let tok
       const factor = this.getFactor();
-      const tok = this.tokens[this.index];
 
       if (this.isNextToken("pri_op")) {
         this.index++;
+        tok = this.tokens[this.index];
 
         const expr = this.getExpression()
         if (expr === undefined) {
@@ -118,15 +119,16 @@ module.exports = class Parser {
         };
       } else if (this.isNextToken("comparator")) {
         this.index++;
+        tok = this.tokens[this.index];
 
         const expr = this.getExpression()
         if (expr === undefined) {
           return this.getHint()
         }
-
+      
         return {
-          type: "expression",
-          kind: "comp_op",
+          kind: 'bool',
+          type: "comp_op",
           value: tok.value,
           left: factor,
           right: expr

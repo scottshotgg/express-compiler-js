@@ -45,9 +45,9 @@
             "value": "i"
           },
           "right": {
-            "type": "expression",
-            "kind": "comp_op",
-            "value": 5,
+            "kind": "bool",
+            "type": "comp_op",
+            "value": ">",
             "left": {
               "type": "literal",
               "kind": "int",
@@ -79,9 +79,9 @@
         "value": []
       },
       "condition": {
-        "type": "expression",
-        "kind": "comp_op",
-        "value": 5,
+        "kind": "bool",
+        "type": "comp_op",
+        "value": ">",
         "left": {
           "type": "literal",
           "kind": "int",
@@ -97,9 +97,9 @@
             "value": 3
           },
           "right": {
-            "type": "expression",
-            "kind": "comp_op",
-            "value": 12,
+            "kind": "bool",
+            "type": "comp_op",
+            "value": "<",
             "left": {
               "type": "literal",
               "kind": "int",

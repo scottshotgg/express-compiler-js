@@ -28,3 +28,33 @@ const ast = new parser(tokens).buildAST()
 if (argv['debug']) {
   console.log(util.inspect(ast, { depth: null, colors: true }));
 }
+
+function translateExpression(expr) {
+  switch (expr.type) {
+    case 'literal':
+      if (expr.kind == 'string') {
+        return "\"" + expr.value + "\""
+      } else if (expr.kind == 'block') {
+        return ''
+      }
+      return expr.value
+
+      break;
+
+    case 'ident':
+      return expr.value
+
+    case 'comp_op':
+    const left  = translateExpression(expr.left)
+    const right = translateExpression(expr.right)
+
+      return left + expr.value + right
+  }
+}
+
+for (stmt of ast.statements) {
+  switch (stmt.type) {
+    case 'declaration':
+      console.log(stmt.value.kind + " " + stmt.ident + " = " + translateExpression(stmt.value) + ";")
+  }
+}

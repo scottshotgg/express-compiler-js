@@ -5,3 +5,5 @@ let s = "something"
 let o = {
   let a = "a"
 }
+
+let somethign = k > j

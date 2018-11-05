@@ -85,6 +85,28 @@
           }
         ]
       }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "somethign",
+      "value": {
+        "kind": "bool",
+        "type": "comp_op",
+        "value": ">",
+        "left": {
+          "type": "ident",
+          "value": "k"
+        },
+        "right": {
+          "type": "ident",
+          "value": "j"
+        }
+      }
     }
   ]
 }

@@ -126,5 +126,29 @@
   {
     "type": "rbrace",
     "value": "}"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "somethign"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "k"
+  },
+  {
+    "type": "comparator",
+    "value": ">"
+  },
+  {
+    "type": "ident",
+    "value": "j"
   }
 ]
