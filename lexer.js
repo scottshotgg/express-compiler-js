@@ -55,6 +55,11 @@ const lexemes = {
     value: 'else'
   },
 
+  import: {
+    type: 'import',
+    value: 'import'
+  },
+
   function: {
     type: 'declaration',
     value: 'function'

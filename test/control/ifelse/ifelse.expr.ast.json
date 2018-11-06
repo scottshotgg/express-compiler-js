@@ -1,13 +1,14 @@
 {
   "type": "program",
-  "statements": [
+  "value": [
     {
+      "type": "control",
       "body": {
         "type": "literal",
         "kind": "block",
         "value": []
       },
-      "condition": {
+      "value": {
         "type": "expression",
         "kind": "comp_op",
         "value": "!=",
@@ -22,24 +23,25 @@
       }
     },
     {
+      "type": "control",
       "body": {
         "type": "literal",
         "kind": "block",
         "value": []
       },
-      "condition": {
-        "type": "expression",
-        "kind": "bin_op",
-        "value": 12,
+      "value": {
+        "kind": "",
+        "type": "bin_op",
+        "value": "+",
         "left": {
           "type": "literal",
           "kind": "int",
           "value": 2
         },
         "right": {
-          "type": "expression",
-          "kind": "bin_op",
-          "value": 12,
+          "kind": "",
+          "type": "bin_op",
+          "value": "+",
           "left": {
             "type": "ident",
             "value": "i"
@@ -54,9 +56,9 @@
               "value": 5
             },
             "right": {
-              "type": "expression",
-              "kind": "bin_op",
-              "value": 12,
+              "kind": "int",
+              "type": "bin_op",
+              "value": "+",
               "left": {
                 "type": "literal",
                 "kind": "int",
@@ -73,12 +75,13 @@
       }
     },
     {
+      "type": "control",
       "body": {
         "type": "literal",
         "kind": "block",
         "value": []
       },
-      "condition": {
+      "value": {
         "kind": "bool",
         "type": "comp_op",
         "value": ">",
@@ -88,9 +91,9 @@
           "value": 5
         },
         "right": {
-          "type": "expression",
-          "kind": "bin_op",
-          "value": 3,
+          "kind": "",
+          "type": "bin_op",
+          "value": "+",
           "left": {
             "type": "literal",
             "kind": "int",
@@ -115,12 +118,13 @@
       }
     },
     {
+      "type": "control",
       "body": {
         "type": "literal",
         "kind": "block",
         "value": []
       },
-      "condition": {
+      "value": {
         "type": "literal",
         "kind": "bool",
         "value": true

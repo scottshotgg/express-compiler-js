@@ -1,6 +1,6 @@
 {
   "type": "program",
-  "statements": [
+  "value": [
     {
       "type": "declaration",
       "kind": "function",
@@ -53,9 +53,9 @@
       },
       "params": [
         {
-          "type": "expression",
-          "kind": "bin_op",
-          "value": 18,
+          "kind": "int",
+          "type": "bin_op",
+          "value": "+",
           "left": {
             "type": "literal",
             "kind": "int",
@@ -68,9 +68,8 @@
           }
         },
         {
-          "type": "expression",
-          "kind": "bin_op",
-          "value": "b",
+          "type": "bin_op",
+          "value": "+",
           "left": {
             "type": "ident",
             "value": "a"
@@ -182,9 +181,9 @@
       },
       "ident": "b",
       "value": {
-        "type": "expression",
-        "kind": "bin_op",
-        "value": 2,
+        "kind": "",
+        "type": "bin_op",
+        "value": "+",
         "left": {
           "type": "selection",
           "ident": "something",
@@ -217,9 +216,9 @@
       },
       "ident": "b",
       "value": {
-        "type": "expression",
-        "kind": "bin_op",
-        "value": 2,
+        "kind": "",
+        "type": "bin_op",
+        "value": "+",
         "left": {
           "type": "selector",
           "ident": "something",

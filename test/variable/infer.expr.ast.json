@@ -1,111 +1,125 @@
 {
   "type": "program",
-  "statements": [
+  "value": [
     {
-      "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
-      "ident": "i",
+      "type": "import",
       "value": {
-        "type": "literal",
-        "kind": "int",
-        "value": 7
+        "type": "ident",
+        "value": "file"
       }
     },
     {
       "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
-      "ident": "f",
-      "value": {
-        "type": "literal",
-        "kind": "float",
-        "value": 6.6
-      }
-    },
-    {
-      "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
+      "infer": false,
+      "kind": "int",
       "ident": "b",
       "value": {
         "type": "literal",
-        "kind": "bool",
-        "value": true
+        "kind": "int",
+        "value": 9
       }
     },
     {
       "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
-      "ident": "s",
+      "infer": false,
+      "kind": "int",
+      "ident": "c",
       "value": {
         "type": "literal",
-        "kind": "string",
-        "value": "something"
+        "kind": "int",
+        "value": 9
       }
     },
     {
       "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
-      "ident": "o",
+      "infer": false,
+      "kind": "int",
+      "ident": "a",
       "value": {
+        "type": "bin_op",
+        "value": "+",
+        "left": {
+          "type": "ident",
+          "value": "b"
+        },
+        "right": {
+          "type": "ident",
+          "value": "c"
+        }
+      }
+    },
+    {
+      "type": "loop",
+      "kind": "for",
+      "start": {
+        "type": "ident",
+        "value": "c"
+      },
+      "end": {
+        "type": "literal",
+        "kind": "int",
+        "value": 10
+      },
+      "step": 1,
+      "body": {
         "type": "literal",
         "kind": "block",
         "value": [
           {
-            "type": "declaration",
-            "infer": true,
-            "kind": {
-              "type": "declaration",
-              "value": "let"
-            },
+            "type": "assignment",
             "ident": "a",
             "value": {
+              "kind": "",
+              "type": "bin_op",
+              "value": "+",
+              "left": {
+                "type": "ident",
+                "value": "a"
+              },
+              "right": {
+                "type": "literal",
+                "kind": "int",
+                "value": 1
+              }
+            }
+          },
+          {
+            "type": "control",
+            "body": {
               "type": "literal",
-              "kind": "string",
-              "value": "a"
+              "kind": "block",
+              "value": [
+                {
+                  "type": "declaration",
+                  "infer": true,
+                  "kind": {
+                    "type": "declaration",
+                    "value": "let"
+                  },
+                  "ident": "a",
+                  "value": {
+                    "type": "literal",
+                    "kind": "string",
+                    "value": "a"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "kind": "bool",
+              "type": "comp_op",
+              "value": ">",
+              "left": {
+                "type": "ident",
+                "value": "a"
+              },
+              "right": {
+                "type": "ident",
+                "value": "b"
+              }
             }
           }
         ]
-      }
-    },
-    {
-      "type": "declaration",
-      "infer": true,
-      "kind": {
-        "type": "declaration",
-        "value": "let"
-      },
-      "ident": "somethign",
-      "value": {
-        "kind": "bool",
-        "type": "comp_op",
-        "value": ">",
-        "left": {
-          "type": "ident",
-          "value": "k"
-        },
-        "right": {
-          "type": "ident",
-          "value": "j"
-        }
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "type": "program",
-  "statements": [
+  "value": [
     {
       "type": "declaration",
       "infer": true,

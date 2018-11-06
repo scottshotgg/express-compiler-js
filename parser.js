@@ -5,7 +5,7 @@ module.exports = class Parser {
     this.index = 0
     this.nodes = {
       type: "program",
-      statements: []
+      value: []
     }
 
     this.buildAST = function () {
@@ -19,7 +19,7 @@ module.exports = class Parser {
           process.exit(9);
         }
 
-        this.nodes.statements.push(stmt);
+        this.nodes.value.push(stmt);
       }
 
       return this.nodes;
@@ -29,6 +29,13 @@ module.exports = class Parser {
       var tok = this.tokens[this.index];
 
       switch (tok.type) {
+        case "import":
+          var expr = this.getExpression()
+          return {
+            type: "import",
+            value: expr
+          }
+
         // var/int/bool/float/string
         case "type":
           var type = tok.value;
@@ -61,7 +68,12 @@ module.exports = class Parser {
         case "ident":
           if (this.isNextToken("lparen")) {
             return this.getFunctionCall();
+            // return this.getExpression()
+          } else if (this.isNextToken("selector")) {
+            this.index--
+            return this.getExpression()
           }
+
           return this.getAssignment();
 
         // return
@@ -79,6 +91,7 @@ module.exports = class Parser {
 
       if (this.isNextToken("bin_op")) {
         this.index++;
+        const op = this.tokens[this.index].value
 
         const expr = this.getExpression()
         if (expr === undefined) {
@@ -86,9 +99,9 @@ module.exports = class Parser {
         }
 
         return {
-          type: "expression",
-          kind: "bin_op",
-          value: this.tokens[this.index].value,
+          kind: this.getKindFromExpressions(term, expr),
+          type: "bin_op",
+          value: op,
           left: term,
           right: expr
         };
@@ -162,6 +175,7 @@ module.exports = class Parser {
 
     this.getFactor = function () {
       const tok = this.tokens[this.index];
+      console.log('i am here', tok)
       let expr
 
       // Literal and Ident are the ground states
@@ -198,6 +212,7 @@ module.exports = class Parser {
 
         case "ident":
           if (this.isNextToken("lparen")) {
+            console.log("im here bby")
             return this.getFunctionCall();
           }
 
@@ -206,6 +221,10 @@ module.exports = class Parser {
             ret.ident = tok.value
             
             return ret
+          }
+
+          if (this.isNextToken("selector") && this.tokens[this.index + 2].type == "selector") {
+            return tok;
           }
 
           if (!this.isNextToken("selector") && !this.isNextToken("lbracket")) {
@@ -219,6 +238,7 @@ module.exports = class Parser {
             return this.getHint()
           }
 
+          console.log("im here bby")
           return {
             type: "selector",
             ident: tok.value,
@@ -226,6 +246,7 @@ module.exports = class Parser {
           };
 
         case "lparen":
+        console.log('hey me')
           expr = this.getExpression();
           if (expr === undefined) {
             return this.getHint()
@@ -428,13 +449,19 @@ module.exports = class Parser {
     // TODO: add some fucking error checking
     this.getLoop = function () {
       const loop = {
-        kind: this.tokens[this.index].value
+        type: 'loop'
+,        kind: this.tokens[this.index].value
       };
+
+      console.log(loop)
 
       const expr = this.getExpression();
       if (expr === undefined) {
         return this.getHint()
       }
+      console.log({
+        expr
+      })
 
       // skip over the .. (2 selectors) for now
       this.index++;
@@ -451,7 +478,7 @@ module.exports = class Parser {
 
       this.index++;
 
-      loop.block = this.getBlock();
+      loop.body = this.getBlock();
 
       return loop;
     }
@@ -484,6 +511,7 @@ module.exports = class Parser {
 
       const body = this.getBlock()
       const ret = {
+        type: 'control',
         body
       }
 
@@ -495,7 +523,7 @@ module.exports = class Parser {
         }
       }
 
-      ret.condition = expr
+      ret.value = expr
 
       return ret
     }
@@ -636,6 +664,15 @@ module.exports = class Parser {
 
     this.isNextTokenValue = function (value, offset = 1) {
       return this.index < this.tokens.length - offset && this.tokens[this.index + offset].value == value;
+    }
+
+    this.getKindFromExpressions = function(term, expr){
+      console.log(term, expr)
+      if (term.kind == expr.kind) {
+        return term.kind
+      }
+
+      return ""
     }
   }
 }

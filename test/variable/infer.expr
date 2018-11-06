@@ -1,9 +1,14 @@
-let i = 7
-let f = 6.6
-let b = true
-let s = "something"
-let o = {
-  let a = "a"
-}
+import file
+import std
 
-let somethign = k > j
+int b = 9;
+int c = 9;
+int a = b + c
+
+for c .. 10 {
+  a = a + 1
+  
+  if a > b {
+    let a = "a"
+  }
+}

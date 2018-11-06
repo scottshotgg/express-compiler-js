@@ -1,6 +1,6 @@
 {
   "type": "program",
-  "statements": [
+  "value": [
     {
       "type": "declaration",
       "infer": true,
@@ -13,9 +13,8 @@
         "type": "expression",
         "kind": "not",
         "value": {
-          "type": "expression",
-          "kind": "bin_op",
-          "value": "c",
+          "type": "bin_op",
+          "value": "+",
           "left": {
             "type": "ident",
             "value": "b"
