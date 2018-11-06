@@ -119,11 +119,11 @@
   },
   {
     "type": "ident",
-    "value": "a,"
+    "value": "a"
   },
   {
     "type": "ident",
-    "value": "b,"
+    "value": "b"
   },
   {
     "type": "ident",
@@ -183,16 +183,9 @@
     "value": "["
   },
   {
-    "type": "quote",
-    "value": "\""
-  },
-  {
-    "type": "ident",
+    "type": "literal",
+    "kind": "string",
     "value": "sdfklsdjklf"
-  },
-  {
-    "type": "quote",
-    "value": "\""
   },
   {
     "type": "rbracket",

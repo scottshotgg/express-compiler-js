@@ -17,7 +17,7 @@
       "step": 1,
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": [
           {
             "type": "declaration",
@@ -44,7 +44,7 @@
             "end": {
               "type": "selector",
               "ident": "obj",
-              "selection": {
+              "value": {
                 "type": "ident",
                 "value": "a"
               }
@@ -52,7 +52,7 @@
             "step": 1,
             "body": {
               "type": "literal",
-              "kind": "block",
+              "kind": "Object",
               "value": []
             }
           }

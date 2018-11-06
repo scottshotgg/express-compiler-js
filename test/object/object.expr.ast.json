@@ -2,6 +2,59 @@
   "type": "program",
   "value": [
     {
+      "type": "import",
+      "value": {
+        "type": "selector",
+        "ident": "c",
+        "value": {
+          "type": "ident",
+          "value": "stdlib"
+        }
+      }
+    },
+    {
+      "type": "import",
+      "value": {
+        "type": "ident",
+        "value": "std"
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "c",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 6
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "float",
+      "ident": "d",
+      "value": {
+        "kind": "float",
+        "type": "bin_op",
+        "value": "+",
+        "left": {
+          "type": "literal",
+          "kind": "float",
+          "value": 5.5
+        },
+        "right": {
+          "type": "literal",
+          "kind": "float",
+          "value": 0.5
+        }
+      }
+    },
+    {
       "type": "declaration",
       "infer": true,
       "kind": {
@@ -10,21 +63,117 @@
       },
       "ident": "obj2",
       "value": {
-        "type": "selector",
-        "ident": "obj",
-        "selection": {
-          "type": "selector",
-          "ident": "a",
-          "selection": {
-            "type": "selector",
-            "ident": "b",
-            "selection": {
+        "type": "literal",
+        "kind": "Object",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "literal",
+              "kind": "int",
+              "value": 666
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "d",
+            "value": {
               "type": "ident",
-              "value": "c"
+              "value": "a"
+            }
+          },
+          {
+            "type": "loop",
+            "kind": "for",
+            "start": {
+              "type": "literal",
+              "kind": "int",
+              "value": 1
+            },
+            "end": {
+              "type": "ident",
+              "value": "a"
+            },
+            "step": 1,
+            "body": {
+              "type": "literal",
+              "kind": "Object",
+              "value": [
+                {
+                  "type": "assignment",
+                  "ident": "d",
+                  "value": {
+                    "kind": "",
+                    "type": "bin_op",
+                    "value": "+",
+                    "left": {
+                      "type": "ident",
+                      "value": "d"
+                    },
+                    "right": {
+                      "type": "literal",
+                      "kind": "int",
+                      "value": 1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "b",
+            "value": {
+              "type": "literal",
+              "kind": "string",
+              "value": "something else"
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "c",
+            "value": {
+              "type": "literal",
+              "kind": "float",
+              "value": 7.7
             }
           }
-        }
+        ]
       }
+    },
+    {
+      "type": "call",
+      "ident": {
+        "type": "ident",
+        "value": "Println"
+      },
+      "params": [
+        {
+          "type": "ident",
+          "value": "d"
+        }
+      ]
     }
   ]
 }

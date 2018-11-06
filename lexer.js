@@ -59,6 +59,10 @@ const lexemes = {
     type: 'import',
     value: 'import'
   },
+  include: {
+    type: 'include',
+    value: 'include'
+  },
 
   function: {
     type: 'declaration',
@@ -148,6 +152,11 @@ const lexemes = {
   '.': {
     type: 'selector',
     value: '.'
+  },
+
+  ',': {
+    type: 'separator',
+    value: ','
   }
 }
 
@@ -181,6 +190,7 @@ module.exports = class Lexer {
           do {
             i++; // skip rest and '\n'
           } while (filedata[i] !== '\n');
+          continue
         } else if (lexemes[this.accumulator]) {
           this.tokens.push(lexemes[this.accumulator]);
           this.accumulator = '';
@@ -191,11 +201,41 @@ module.exports = class Lexer {
             this.tokens.push(this.lexLit(this.accumulator));
           }
           this.accumulator = '';
+          // Use the lexer to collect strings
+        } else if (char == '"') {
+          i++
+          var string = ""
+          while (i < filedata.length && filedata[i] != '"') {
+            // Escape character
+            if (filedata[i] == '\\') {
+              string += filedata[i]
+              i++
+            }
+            string += filedata[i]
+            i++
+          }
+
+          this.tokens.push({
+            type: 'literal',
+            kind: 'string',
+            value: string
+          })
+          // Force accumulator lexing if there is a separator
+        } else if(char === ',') {
+          if (this.accumulator != '') {
+            const lexeme = this.lexLit(this.accumulator)
+            if (lexeme === undefined) {
+              console.log('Could not process accumulator:', this.accumulator)
+              process.exit(9)
+            }
+            this.tokens.push(lexeme);
+            this.accumulator = '';
+          }
         } else if (lexemes[char]) {
           if (this.accumulator != '') {
             this.tokens.push(this.lexLit(this.accumulator));
             this.accumulator = '';
-          }  
+          }
 
           this.tokens.push(lexemes[char]);
         } else {

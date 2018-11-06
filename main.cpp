@@ -1,4 +1,28 @@
-#include "lib/file.cpp"
+#include "lib/object.cpp"
 #include "lib/std.cpp"
+#include <stdlib.h>
 #include <string>
-using namespace std;int main(){int b = 9;int c = 9;int a = b+c;undefined something = undefined;Print("hi");{for (int temp=c;temp<10;temp++){a = a+1;if (a>b) {string a = "a";}}}}
+using namespace std;
+int main() {
+  int c = 6;
+  float d = 5.5 + 0.5;
+  Object obj2;
+  {
+    Object o;
+    int a = 666;
+    int d = a;
+    {
+      for (int temp = 1; temp < a; temp++) {
+        d = d + 1;
+      }
+    }
+    string b = "something else";
+    float c = 7.7;
+    o.AddProp("a", a);
+    o.AddProp("d", d);
+    o.AddProp("b", b);
+    o.AddProp("c", c);
+    obj2 = o;
+  }
+  Println(d);
+}

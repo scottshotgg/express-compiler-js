@@ -9,6 +9,13 @@
       }
     },
     {
+      "type": "include",
+      "value": {
+        "type": "ident",
+        "value": "stdio"
+      }
+    },
+    {
       "type": "declaration",
       "infer": false,
       "kind": "int",
@@ -27,7 +34,7 @@
       "value": {
         "type": "literal",
         "kind": "int",
-        "value": 9
+        "value": 2
       }
     },
     {
@@ -49,6 +56,20 @@
       }
     },
     {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "totalString",
+      "value": {
+        "type": "literal",
+        "kind": "string",
+        "value": ""
+      }
+    },
+    {
       "type": "loop",
       "kind": "for",
       "start": {
@@ -63,7 +84,7 @@
       "step": 1,
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": [
           {
             "type": "assignment",
@@ -87,20 +108,45 @@
             "type": "control",
             "body": {
               "type": "literal",
-              "kind": "block",
+              "kind": "Object",
               "value": [
                 {
-                  "type": "declaration",
-                  "infer": true,
-                  "kind": {
-                    "type": "declaration",
-                    "value": "let"
-                  },
-                  "ident": "a",
+                  "type": "assignment",
+                  "ident": "totalString",
                   "value": {
-                    "type": "literal",
-                    "kind": "string",
-                    "value": "a"
+                    "type": "bin_op",
+                    "value": "+",
+                    "left": {
+                      "type": "ident",
+                      "value": "totalString"
+                    },
+                    "right": {
+                      "type": "selector",
+                      "ident": "c",
+                      "value": {
+                        "kind": "",
+                        "type": "bin_op",
+                        "value": "+",
+                        "left": {
+                          "type": "call",
+                          "ident": {
+                            "type": "ident",
+                            "value": "to_string"
+                          },
+                          "params": [
+                            {
+                              "type": "ident",
+                              "value": "a"
+                            }
+                          ]
+                        },
+                        "right": {
+                          "type": "literal",
+                          "kind": "string",
+                          "value": " "
+                        }
+                      }
+                    }
                   }
                 }
               ]
@@ -114,10 +160,95 @@
                 "value": "a"
               },
               "right": {
-                "type": "ident",
-                "value": "b"
+                "type": "literal",
+                "kind": "int",
+                "value": 12
               }
             }
+          },
+          {
+            "type": "selector",
+            "ident": "c",
+            "value": {
+              "type": "call",
+              "ident": {
+                "type": "ident",
+                "value": "printf"
+              },
+              "params": [
+                {
+                  "type": "literal",
+                  "kind": "string",
+                  "value": "\\\"hi\\\"\\n"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "something",
+      "value": {
+        "type": "literal",
+        "kind": "Object",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": true,
+            "kind": {
+              "type": "declaration",
+              "value": "let"
+            },
+            "ident": "a",
+            "value": {
+              "type": "literal",
+              "kind": "string",
+              "value": "a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "selector",
+      "ident": "file",
+      "value": {
+        "type": "call",
+        "ident": {
+          "type": "ident",
+          "value": "WriteFile"
+        },
+        "params": [
+          {
+            "type": "literal",
+            "kind": "string",
+            "value": "hey.txt"
+          },
+          {
+            "kind": "",
+            "type": "bin_op",
+            "value": "+",
+            "left": {
+              "type": "ident",
+              "value": "totalString"
+            },
+            "right": {
+              "type": "literal",
+              "kind": "string",
+              "value": "hey its me"
+            }
+          },
+          {
+            "type": "literal",
+            "kind": "bool",
+            "value": true
           }
         ]
       }

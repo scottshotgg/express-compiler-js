@@ -35,6 +35,12 @@ module.exports = class Parser {
             type: "import",
             value: expr
           }
+          case "include":
+            var expr = this.getExpression()
+            return {
+              type: "include",
+              value: expr
+            }
 
         // var/int/bool/float/string
         case "type":
@@ -183,16 +189,13 @@ module.exports = class Parser {
         case "literal":
           if (this.isNextToken("selector") && this.tokens[this.index + 2].type != "selector") {
             this.index++;
-            expr = this.getExpression();
-            if (typeof expr === undefined) {
-              return this.getHint()
-            }
+            this.index++;
 
             return {
               type: "literal",
               kind: "float",
               // mantissa and abscissa
-              value: parseFloat(tok.value + "." + expr.value)
+              value: parseFloat(tok.value + "." + this.tokens[this.index].value)
             };
           }
 
@@ -242,11 +245,11 @@ module.exports = class Parser {
           return {
             type: "selector",
             ident: tok.value,
-            selection: expr
+            value: expr
           };
 
         case "lparen":
-        console.log('hey me')
+          console.log('hey me')
           expr = this.getExpression();
           if (expr === undefined) {
             return this.getHint()
@@ -309,7 +312,10 @@ module.exports = class Parser {
         return this.getHint();
       }
 
-      this.index++;
+      // if (infer) {
+        this.index++;
+      // }
+
       if (this.index < this.tokens.length && this.tokens[this.index].type != "assign") {
         return this.getHint();
       }
@@ -381,10 +387,10 @@ module.exports = class Parser {
         return {
           type: "selection",
           ident,
-          selection: {
+          value: {
             type: "selector",
             ident: expr,
-            selection: fact
+            value: fact
           }
         };
       }
@@ -392,7 +398,7 @@ module.exports = class Parser {
       return {
         type: "selector",
         ident: ident,
-        selection: expr
+        value: expr
       };
     }
 
@@ -412,7 +418,7 @@ module.exports = class Parser {
 
       return {
         type: "literal",
-        kind: "block",
+        kind: "Object",
         value: statements
       };
     }

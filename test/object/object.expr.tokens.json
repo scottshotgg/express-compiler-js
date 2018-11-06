@@ -1,5 +1,90 @@
 [
   {
+    "type": "import",
+    "value": "import"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "stdlib"
+  },
+  {
+    "type": "import",
+    "value": "import"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 6
+  },
+  {
+    "type": "type",
+    "value": "float"
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 0
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
     "type": "declaration",
     "value": "let"
   },
@@ -12,8 +97,54 @@
     "value": "="
   },
   {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
     "type": "ident",
-    "value": "obj"
+    "value": "a"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 666
+  },
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "a"
+  },
+  {
+    "type": "loop",
+    "value": "for"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 1
+  },
+  {
+    "type": "selector",
+    "value": "."
   },
   {
     "type": "selector",
@@ -24,19 +155,95 @@
     "value": "a"
   },
   {
-    "type": "selector",
-    "value": "."
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 1
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
   },
   {
     "type": "ident",
     "value": "b"
   },
   {
-    "type": "selector",
-    "value": "."
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "something else"
+  },
+  {
+    "type": "declaration",
+    "value": "let"
   },
   {
     "type": "ident",
     "value": "c"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 7
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 7
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "ident",
+    "value": "Println"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
   }
 ]

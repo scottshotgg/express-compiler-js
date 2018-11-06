@@ -1,14 +1,25 @@
 import file
-import std
+include stdio
 
-int b = 9;
-int c = 9;
+int b = 9
+int c = 2
 int a = b + c
+
+let totalString = ""
 
 for c .. 10 {
   a = a + 1
   
-  if a > b {
+  if a > 12 {
+    totalString = totalString + c.to_string(a) + " "
+  }
+
+  c.printf("\"hi\"\n")
+}
+
+  // FIXME: Need to make the runtime better
+  let something = {
     let a = "a"
   }
-}
+
+file.WriteFile("hey.txt", totalString + "hey its me", true)

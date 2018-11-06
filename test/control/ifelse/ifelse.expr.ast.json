@@ -5,7 +5,7 @@
       "type": "control",
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": []
       },
       "value": {
@@ -26,7 +26,7 @@
       "type": "control",
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": []
       },
       "value": {
@@ -78,7 +78,7 @@
       "type": "control",
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": []
       },
       "value": {
@@ -121,7 +121,7 @@
       "type": "control",
       "body": {
         "type": "literal",
-        "kind": "block",
+        "kind": "Object",
         "value": []
       },
       "value": {

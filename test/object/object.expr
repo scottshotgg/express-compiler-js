@@ -1,1 +1,19 @@
-let obj2 = obj.a.b.c
+import c.stdlib
+import std
+
+let c = 6
+float d = 5.5 + 0.5
+
+let obj2 = {
+  let a = 666
+  let d = a
+
+  for 1 .. a {
+    d = d + 1
+  }
+
+  let b = "something else"
+  let c = 7.7
+}
+
+Println(d)
