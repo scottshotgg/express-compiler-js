@@ -1,0 +1,6 @@
+let l = 6
+
+int i = 5
+float f = 6.67
+bool b = true
+string s = "lil stringy boi"

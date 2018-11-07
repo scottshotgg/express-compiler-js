@@ -1,0 +1,96 @@
+[
+  {
+    "type": "declaration",
+    "value": "let"
+  },
+  {
+    "type": "ident",
+    "value": "l"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 6
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 5
+  },
+  {
+    "type": "type",
+    "value": "float"
+  },
+  {
+    "type": "ident",
+    "value": "f"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 6
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 67
+  },
+  {
+    "type": "type",
+    "value": "bool"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "bool",
+    "value": true
+  },
+  {
+    "type": "type",
+    "value": "string"
+  },
+  {
+    "type": "ident",
+    "value": "s"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "lil stringy boi"
+  }
+]

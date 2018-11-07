@@ -1,0 +1,63 @@
+{
+  "type": "program",
+  "value": [
+    {
+      "type": "declaration",
+      "infer": true,
+      "kind": {
+        "type": "declaration",
+        "value": "let"
+      },
+      "ident": "l",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 6
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "int",
+      "ident": "i",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 5
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "float",
+      "ident": "f",
+      "value": {
+        "type": "literal",
+        "kind": "float",
+        "value": 6.67
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "bool",
+      "ident": "b",
+      "value": {
+        "type": "literal",
+        "kind": "bool",
+        "value": true
+      }
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "string",
+      "ident": "s",
+      "value": {
+        "type": "literal",
+        "kind": "string",
+        "value": "lil stringy boi"
+      }
+    }
+  ]
+}

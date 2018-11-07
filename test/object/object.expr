@@ -2,8 +2,11 @@ include stdlib
 import std
 import file
 
+string program = file.ReadFile("test/object/object.expr")
+
 let c = 6
 float d = 5.5 + 0.5
+string thing = "hey" + " its me"
 
 let obj2 = {
   let a = 60

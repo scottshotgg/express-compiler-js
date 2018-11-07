@@ -5,8 +5,10 @@
 #include <string>
 using namespace std;
 int main() {
+  Println(ReadFile("test/object/object.expr"));
   int c = 6;
   float d = 5.5 + 0.5;
+  string thing = string("hey") + string(" its me");
   Object obj2;
   {
     Object o;
@@ -28,6 +30,7 @@ int main() {
   printf("libc: d: %f\n", d);
   Println("stdlib d:", d);
   Println("obj2.d:", obj2["d"]);
-  Println("this is a string " + to_string(d));
-  WriteFile("hey.txt", "this is a string " + to_string(d), true);
+  Println(string("this is a string ") + string(to_string(d)));
+  WriteFile("hey.txt", string("this is a string ") + string(to_string(d)),
+            true);
 }

@@ -1,19 +1,15 @@
-function something(int a  int b) {
-  let a = b
-  return a
+function something(int a, int b) {
+  let a = 0
+
+  // TODO: this example is broken:
+  // parsing the return is ambiguous:
+  // getting the next expression will yield
+  // unexpected results because that may be an expression statement
+  // like a block or a function call
+  // either 
+  //  a) return void  or
+  //  b) bounce back to the lexer and ask if it got a newline or
+  //  c) parse the newlines and have the parser skip them
+  
+  return void
 }
-
-something(17 + 18, a + b)
-
-let something = [ a, b, c ]
-let a = something[0]
-let a = something["sdfklsdjklf"]
-let a = something[0 == 1]
-let b = something[9].a + 2
-let b = something[x[0]] + 2
-
-let a = false
-let b = 2
-
-
-

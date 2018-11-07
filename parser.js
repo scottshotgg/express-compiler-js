@@ -35,12 +35,12 @@ module.exports = class Parser {
             type: "import",
             value: expr
           }
-          case "include":
-            var expr = this.getExpression()
-            return {
-              type: "include",
-              value: expr
-            }
+        case "include":
+          var expr = this.getExpression()
+          return {
+            type: "include",
+            value: expr
+          }
 
         // var/int/bool/float/string
         case "type":
@@ -144,7 +144,7 @@ module.exports = class Parser {
         if (expr === undefined) {
           return this.getHint()
         }
-      
+
         return {
           kind: 'bool',
           type: "comp_op",
@@ -222,7 +222,7 @@ module.exports = class Parser {
           if (this.isNextToken("lbracket")) {
             var ret = this.getBracketSelector()
             ret.ident = tok.value
-            
+
             return ret
           }
 
@@ -313,7 +313,7 @@ module.exports = class Parser {
       }
 
       // if (infer) {
-        this.index++;
+      this.index++;
       // }
 
       if (this.index < this.tokens.length && this.tokens[this.index].type != "assign") {
@@ -456,7 +456,7 @@ module.exports = class Parser {
     this.getLoop = function () {
       const loop = {
         type: 'loop'
-,        kind: this.tokens[this.index].value
+        , kind: this.tokens[this.index].value
       };
 
       console.log(loop)
@@ -672,7 +672,7 @@ module.exports = class Parser {
       return this.index < this.tokens.length - offset && this.tokens[this.index + offset].value == value;
     }
 
-    this.getKindFromExpressions = function(term, expr){
+    this.getKindFromExpressions = function (term, expr) {
       console.log(term, expr)
       if (term.kind == expr.kind) {
         return term.kind
