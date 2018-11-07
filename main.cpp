@@ -1,3 +1,4 @@
+#include "lib/file.cpp"
 #include "lib/object.cpp"
 #include "lib/std.cpp"
 #include <stdlib.h>
@@ -24,7 +25,9 @@ int main() {
     o.AddProp("c", c);
     obj2 = o;
   }
-  Println("d:", d);
+  printf("libc: d: %f\n", d);
+  Println("stdlib d:", d);
   Println("obj2.d:", obj2["d"]);
-  Println("this is a string", to_string(65));
+  Println("this is a string " + to_string(d));
+  WriteFile("hey.txt", "this is a string " + to_string(d), true);
 }
