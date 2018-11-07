@@ -2,6 +2,19 @@ package file
 
 import strings
 
+/*
+  To solve the C library integration either:
+
+  1. Make a c package that can directly use the functions and wraps them
+    to return certain things and hide the underlying libc functions;
+    this is essentially what Go does and is kinda dumb
+
+  2. c.* are always public and can be used; compiler addition
+
+  3. put the c functions (`fopen`, `fgets`, ...) will be functions in the
+    language that can be used raw
+*/
+
 type File = {
   c.FILE* file = nil
   string mode = "r"
@@ -12,19 +25,19 @@ type File = {
   function Read(int amount) -> string {
     string entireLine
     int count
-    int ch = c.fgetc(this.file)
+    int ch = fgetc(this.file)
 
-    while !c.feof(this.file) && count < amount {
+    while !feof(this.file) && count < amount {
       count = count + 1
       entireLine += ch
-      ch = c.fgetc(this.file)
+      ch = fgetc(this.file)
     }
 
     return entireLine
   }
 
   function Write(char[] text) {
-    c.fputs(text, this.file)
+    fputs(text, this.file)
   }
 
   function WriteString(string text) {
@@ -32,15 +45,15 @@ type File = {
   }
 
   function seekToPosition(int pos) {
-    return c.fseek(this.file, pos, c.SEEK_SET)
+    return fseek(this.file, pos, c.SEEK_SET)
   }
 
   function Length() -> int {
     defer seekToPosition(c.ftell(this.file))
 
-    c.fseek(this.file, 0, c.SEEK_END)
+    fseek(this.file, 0, c.SEEK_END)
 
-    return c.ftell(this.file)
+    return ftell(this.file)
   }
 }
 
