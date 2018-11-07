@@ -1,5 +1,70 @@
-include "../file.cpp"
+package file
 
-function ReadFile(string filename) -> string {
-  return c.ReadFile(string)
+import strings
+
+type File = {
+  c.FILE* file = nil
+  string mode = "r"
+  string filename
+  string filepath
+  bool open
+
+  function Read(int amount) -> string {
+    string entireLine
+    int count
+    int ch = c.fgetc(this.file)
+
+    while !c.feof(this.file) && count < amount {
+      count = count + 1
+      entireLine += ch
+      ch = c.fgetc(this.file)
+    }
+
+    return entireLine
+  }
+
+  function Write(char[] text) {
+    c.fputs(text, this.file)
+  }
+
+  function WriteString(string text) {
+    Write(strings.CString(text))
+  }
+
+  function seekToPosition(int pos) {
+    return c.fseek(this.file, pos, c.SEEK_SET)
+  }
+
+  function Length() -> int {
+    defer seekToPosition(c.ftell(this.file))
+
+    c.fseek(this.file, 0, c.SEEK_END)
+
+    return c.ftell(this.file)
+  }
+}
+
+function Open(string filepath, string mode) -> File {
+  let filepathCStr = strings.CString(filepath)
+  let modeCStr = strings.CString(mode)
+
+  return File {
+    file: c.fopen(filepathCStr, modeCStr),
+    mode: modeCStr,
+    filename: c.basename(filepathCStr),
+    filepath: c.dirname(filepathCStr),
+    open: true
+  }
+}
+
+function WriteFile(string filepath, string contents, bool overWrite) {
+  let file = c.fopen(strings.CString(filepath), "w")
+  if file != nil {
+    if !overwrite {
+      c.fclose(file)
+    }
+  }
+
+  c.fputs(strings.CString(contents), file)
+  c.fclose(file)
 }
