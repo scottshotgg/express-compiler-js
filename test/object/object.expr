@@ -1,11 +1,11 @@
-import c.stdlib
+include stdlib
 import std
 
 let c = 6
 float d = 5.5 + 0.5
 
 let obj2 = {
-  let a = 666
+  let a = 60
   let d = a
 
   for 1 .. a {
@@ -16,4 +16,7 @@ let obj2 = {
   let c = 7.7
 }
 
-Println(d)
+std.Println("d:", d)
+std.Println("obj2.d:", obj2.d)
+
+std.Println("this is a string", to_string(65))

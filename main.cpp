@@ -9,7 +9,7 @@ int main() {
   Object obj2;
   {
     Object o;
-    int a = 666;
+    int a = 60;
     int d = a;
     {
       for (int temp = 1; temp < a; temp++) {
@@ -24,5 +24,7 @@ int main() {
     o.AddProp("c", c);
     obj2 = o;
   }
-  Println(d);
+  Println("d:", d);
+  Println("obj2.d:", obj2["d"]);
+  Println("this is a string", to_string(65));
 }
