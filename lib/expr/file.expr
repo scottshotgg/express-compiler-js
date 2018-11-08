@@ -25,19 +25,19 @@ type File = {
   function Read(int amount) -> string {
     string entireLine
     int count
-    int ch = fgetc(this.file)
+    int ch = c.fgetc(this.file)
 
-    while !feof(this.file) && count < amount {
+    while !c.feof(this.file) && count < amount {
       count = count + 1
       entireLine += ch
-      ch = fgetc(this.file)
+      ch = c.fgetc(this.file)
     }
 
     return entireLine
   }
 
   function Write(char[] text) {
-    fputs(text, this.file)
+    c.fputs(text, this.file)
   }
 
   function WriteString(string text) {
@@ -45,15 +45,15 @@ type File = {
   }
 
   function seekToPosition(int pos) {
-    return fseek(this.file, pos, c.SEEK_SET)
+    return c.fseek(this.file, pos, c.SEEK_SET)
   }
 
   function Length() -> int {
     defer seekToPosition(c.ftell(this.file))
 
-    fseek(this.file, 0, c.SEEK_END)
+    c.fseek(this.file, 0, c.SEEK_END)
 
-    return ftell(this.file)
+    return c.ftell(this.file)
   }
 }
 
