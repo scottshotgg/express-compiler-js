@@ -1,5 +1,8 @@
 package file
 
+use unsafe
+use strict
+
 import strings
 
 /*
@@ -15,7 +18,7 @@ import strings
     language that can be used raw
 */
 
-type File = {
+struct File = {
   c.FILE* file = nil
   string mode = "r"
   string filename
