@@ -3,7 +3,7 @@ import std
 struct thing {
   int i = 15
   float f
-  bool b
+  bool b = !true
   string s
 
   function something() -> string {
@@ -12,12 +12,15 @@ struct thing {
 }
 
 function somethingElse() -> thing {
+  FILE* file = fopen("parser.js", "0420")
+
   thing t = thing{
     i = 2
     f = 67.65
     b = true
     s = "hey its me"
   }
+
   return t
 }
 

@@ -35,7 +35,7 @@ var functions = ''
 var structs = ''
 
 // This is hacky but fuck it; works for now
-const inStruct = false
+var inStruct = false
 
 function translateObject(value) {
   console.log("thingy brah")
@@ -68,9 +68,15 @@ function createStructInit(stmts) {
 
 function translateExpression(expr) {
   switch (expr.type) {
-    case 'not':
-    // TODO: this will require some more thought
+    case 'unary':
+      switch (expr.kind) {
+        case 'not':
+          return '!' + translateExpression(expr.value)
 
+        default:
+          console.log("idk what to do", { expr })
+          process.exit(9)
+      }
     case 'call':
       return expr.ident.value + '('
         + expr.params.map(param =>
@@ -140,7 +146,11 @@ function translateExpression(expr) {
       //   others: translateExpression(expr.value)
       // })
 
-      // process.exit(9)
+      // process.exit(9)s
+
+      if (identt === 'this') {
+        return identt + '->' + translateExpression(expr.value)
+      }
 
       return [identt, translateExpression(expr.value)].join('.')
 
@@ -260,6 +270,8 @@ function translateBlock(stmts) {
           if (typeof stmt.value === 'object') {
             // we have a struct
 
+            inStruct = true
+
             console.log({ stmttype: stmt.kind })
             if (stmt.kind !== 'type') {
               console.log("struct literal", stmt)
@@ -274,6 +286,7 @@ function translateBlock(stmts) {
             functions = oldFunctions
 
             structs += 'class ' + stmt.ident + '{ public:' + funcs + block + ' };\n\n'
+            inStruct = false
             break
           }
 
@@ -292,6 +305,9 @@ function translateBlock(stmts) {
         }
 
         var kind = stmt.value.kind
+        if (kind === 'not') {
+          kind = undefined
+        }
         if (kind === 'struct') {
           // will need to check the type here
           kind = stmt.value.ident

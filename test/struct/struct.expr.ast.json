@@ -2,6 +2,13 @@
   "type": "program",
   "value": [
     {
+      "type": "import",
+      "value": {
+        "type": "ident",
+        "value": "std"
+      }
+    },
+    {
       "type": "declaration",
       "kind": "type",
       "ident": "thing",
@@ -169,17 +176,76 @@
         {
           "type": "literal",
           "kind": "string",
-          "value": "the string value is: %s\\n"
+          "value": "printf value is:      %s\\n"
         },
         {
-          "type": "call",
+          "type": "selector",
           "ident": {
-            "type": "ident",
-            "value": "somethingElse"
+            "type": "call",
+            "ident": {
+              "type": "ident",
+              "value": "somethingElse"
+            },
+            "params": []
           },
-          "params": []
+          "value": {
+            "type": "selector",
+            "ident": {
+              "type": "call",
+              "ident": {
+                "type": "ident",
+                "value": "something"
+              },
+              "params": []
+            },
+            "value": {
+              "type": "call",
+              "ident": {
+                "type": "ident",
+                "value": "c_str"
+              },
+              "params": []
+            }
+          }
         }
       ]
+    },
+    {
+      "type": "selector",
+      "ident": "std",
+      "value": {
+        "type": "call",
+        "ident": {
+          "type": "ident",
+          "value": "Println"
+        },
+        "params": [
+          {
+            "type": "literal",
+            "kind": "string",
+            "value": "std.Println value is:"
+          },
+          {
+            "type": "selector",
+            "ident": {
+              "type": "call",
+              "ident": {
+                "type": "ident",
+                "value": "somethingElse"
+              },
+              "params": []
+            },
+            "value": {
+              "type": "call",
+              "ident": {
+                "type": "ident",
+                "value": "something"
+              },
+              "params": []
+            }
+          }
+        ]
+      }
     }
   ]
 }

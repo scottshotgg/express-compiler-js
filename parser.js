@@ -1,7 +1,12 @@
+const fs = require('fs')
+
 module.exports = class Parser {
   constructor(tokens) {
-    // return {
-    this.typeMap = {}
+    this.typeMap = Object.assign(...fs.readFileSync('lib/libc_types')
+      .toString()
+      .split('\n')
+      .map((type) => { return { [type]: type } }))
+
     this.tokens = tokens
     this.index = 0
     this.nodes = {
@@ -29,6 +34,8 @@ module.exports = class Parser {
 
     this.getStatement = function () {
       var tok = this.tokens[this.index];
+      console.log({ tok })
+
 
       switch (tok.type) {
         case "import":
@@ -47,6 +54,10 @@ module.exports = class Parser {
         // var/int/bool/float/string
         case "type":
           var type = tok.value;
+          if (this.isNextTokenValue('*')) {
+            console.log("hey")
+            process.exit(9)
+          }
 
           if (this.isNextToken("lbracket")) {
             this.index++;
@@ -204,6 +215,12 @@ module.exports = class Parser {
 
       // Literal and Ident are the ground states
       switch (tok.type) {
+        case 'nil':
+          return {
+            type: 'literal',
+            value: 'nullptr'
+          }
+
         case "call":
           // we really should have put the selector actually in the term thing
           return this.getFunctionCall()
@@ -231,7 +248,7 @@ module.exports = class Parser {
           }
 
           return {
-            type: "expression",
+            type: "unary",
             kind: "not",
             value: notExpr
           };
@@ -305,6 +322,12 @@ module.exports = class Parser {
 
     this.getAssignment = function () {
       const tok = this.tokens[this.index];
+
+      if (this.typeMap[tok.value]) {
+        this.tokens[this.index].type = 'type'
+        console.log("i am here")
+        return this.getDeclarationStatement()
+      }
 
       if (!this.isNextToken("assign")) {
         return this.getHint();
@@ -430,6 +453,14 @@ module.exports = class Parser {
     // ( `let` | `var` ) IDENT `=` EXPRESSION
     this.getDeclarationStatement = function (infer, kind = this.tokens[this.index]) {
       var toki = this.tokens[this.index]
+
+      if (this.isNextTokenValue('*')) {
+        this.tokens[this.index].value += '*'
+        kind += "*"
+        console.log("ay bruh", this.tokens[this.index])
+        toki = this.tokens[this.index]
+        this.index++
+      }
 
       if (toki.value == "function") {
         return this.getFunction();

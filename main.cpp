@@ -7,11 +7,12 @@ public:
 
   int i = 15;
   float f = 0;
-  bool b = false;
+  bool b = !true;
   string s = "";
 };
 
 thing somethingElse() {
+  FILE *file = fopen("parser.js", "0420");
   thing t = thing{
       2,
       67.65,

@@ -44,6 +44,11 @@ const lexemes = {
     kind: 'bool',
     value: false
   },
+  nil: {
+    type: 'nil',
+    kind: 'none',
+    value: "null"
+  },
 
   for: {
     type: 'loop',

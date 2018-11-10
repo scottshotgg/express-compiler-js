@@ -1,5 +1,13 @@
 [
   {
+    "type": "import",
+    "value": "import"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
     "type": "declaration",
     "value": "struct"
   },
@@ -240,7 +248,76 @@
   {
     "type": "literal",
     "kind": "string",
-    "value": "the string value is: %s\\n"
+    "value": "printf value is:      %s\\n"
+  },
+  {
+    "type": "ident",
+    "value": "somethingElse"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "c_str"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "Println"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "std.Println value is:"
   },
   {
     "type": "ident",

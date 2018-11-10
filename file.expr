@@ -1,6 +1,5 @@
 struct File {
-  // It doesn't know what FILE and nil are
-  //FILE* file = nil
+  FILE* file = nil
   string mode = "r"
   string filename
   string filepath
