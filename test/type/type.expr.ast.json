@@ -1,0 +1,22 @@
+{
+  "type": "program",
+  "value": [
+    {
+      "type": "declaration",
+      "kind": "type",
+      "ident": "myInt",
+      "value": "int"
+    },
+    {
+      "type": "declaration",
+      "infer": false,
+      "kind": "myInt",
+      "ident": "a",
+      "value": {
+        "type": "literal",
+        "kind": "int",
+        "value": 6
+      }
+    }
+  ]
+}

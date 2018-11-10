@@ -45,8 +45,14 @@
               "type": "selector",
               "ident": "obj",
               "value": {
-                "type": "ident",
-                "value": "a"
+                "type": "literal",
+                "kind": "struct",
+                "ident": "a",
+                "value": {
+                  "type": "literal",
+                  "kind": "struct",
+                  "value": []
+                }
               }
             },
             "step": 1,

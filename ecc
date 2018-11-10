@@ -1,1 +1,2 @@
-node cc.js test/object/object.expr --debug && clang-format -i main.cpp && clang++ main.cpp -o main && ./main
+#node cc.js file.expr --debug && clang-format -i main.cpp && clang++ main.cpp -o main && ./main
+node cc.js test/struct/struct.expr --debug && clang-format -i main.cpp && clang++ main.cpp -o main && ./main

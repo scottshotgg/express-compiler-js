@@ -1,0 +1,277 @@
+[
+  {
+    "type": "declaration",
+    "value": "struct"
+  },
+  {
+    "type": "ident",
+    "value": "thing"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "type",
+    "value": "int"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 15
+  },
+  {
+    "type": "type",
+    "value": "float"
+  },
+  {
+    "type": "ident",
+    "value": "f"
+  },
+  {
+    "type": "type",
+    "value": "bool"
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "type",
+    "value": "string"
+  },
+  {
+    "type": "ident",
+    "value": "s"
+  },
+  {
+    "type": "declaration",
+    "value": "function"
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "bin_op",
+    "value": "-"
+  },
+  {
+    "type": "comparator",
+    "value": ">"
+  },
+  {
+    "type": "type",
+    "value": "string"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "return",
+    "value": "return"
+  },
+  {
+    "type": "ident",
+    "value": "s"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "declaration",
+    "value": "function"
+  },
+  {
+    "type": "ident",
+    "value": "somethingElse"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "bin_op",
+    "value": "-"
+  },
+  {
+    "type": "comparator",
+    "value": ">"
+  },
+  {
+    "type": "ident",
+    "value": "thing"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "ident",
+    "value": "thing"
+  },
+  {
+    "type": "ident",
+    "value": "t"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "thing"
+  },
+  {
+    "type": "lbrace",
+    "value": "{"
+  },
+  {
+    "type": "ident",
+    "value": "i"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 2
+  },
+  {
+    "type": "ident",
+    "value": "f"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 67
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "literal",
+    "kind": "int",
+    "value": 65
+  },
+  {
+    "type": "ident",
+    "value": "b"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "bool",
+    "value": true
+  },
+  {
+    "type": "ident",
+    "value": "s"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "hey its me"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "return",
+    "value": "return"
+  },
+  {
+    "type": "ident",
+    "value": "t"
+  },
+  {
+    "type": "rbrace",
+    "value": "}"
+  },
+  {
+    "type": "ident",
+    "value": "printf"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "the string value is: %s\\n"
+  },
+  {
+    "type": "ident",
+    "value": "somethingElse"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "something"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  }
+]

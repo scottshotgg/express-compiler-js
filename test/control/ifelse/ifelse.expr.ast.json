@@ -6,7 +6,116 @@
       "body": {
         "type": "literal",
         "kind": "Object",
-        "value": []
+        "value": [
+          {
+            "type": "control",
+            "body": {
+              "type": "literal",
+              "kind": "Object",
+              "value": []
+            },
+            "value": {
+              "kind": "",
+              "type": "bin_op",
+              "value": "+",
+              "left": {
+                "type": "literal",
+                "kind": "int",
+                "value": 2
+              },
+              "right": {
+                "kind": "",
+                "type": "bin_op",
+                "value": "+",
+                "left": {
+                  "type": "ident",
+                  "value": "i"
+                },
+                "right": {
+                  "kind": "bool",
+                  "type": "comp_op",
+                  "value": ">",
+                  "left": {
+                    "type": "literal",
+                    "kind": "int",
+                    "value": 5
+                  },
+                  "right": {
+                    "kind": "int",
+                    "type": "bin_op",
+                    "value": "+",
+                    "left": {
+                      "type": "literal",
+                      "kind": "int",
+                      "value": 10
+                    },
+                    "right": {
+                      "type": "literal",
+                      "kind": "int",
+                      "value": 12
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "control",
+            "body": {
+              "type": "literal",
+              "kind": "Object",
+              "value": []
+            },
+            "value": {
+              "kind": "bool",
+              "type": "comp_op",
+              "value": ">",
+              "left": {
+                "type": "literal",
+                "kind": "int",
+                "value": 5
+              },
+              "right": {
+                "kind": "",
+                "type": "bin_op",
+                "value": "+",
+                "left": {
+                  "type": "literal",
+                  "kind": "int",
+                  "value": 3
+                },
+                "right": {
+                  "kind": "bool",
+                  "type": "comp_op",
+                  "value": "<",
+                  "left": {
+                    "type": "literal",
+                    "kind": "int",
+                    "value": 12
+                  },
+                  "right": {
+                    "type": "literal",
+                    "kind": "int",
+                    "value": 3
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "control",
+            "body": {
+              "type": "literal",
+              "kind": "Object",
+              "value": []
+            },
+            "value": {
+              "type": "literal",
+              "kind": "bool",
+              "value": true
+            }
+          }
+        ]
       },
       "value": {
         "type": "expression",
@@ -17,117 +126,15 @@
           "value": "a"
         },
         "right": {
-          "type": "ident",
-          "value": "b"
-        }
-      }
-    },
-    {
-      "type": "control",
-      "body": {
-        "type": "literal",
-        "kind": "Object",
-        "value": []
-      },
-      "value": {
-        "kind": "",
-        "type": "bin_op",
-        "value": "+",
-        "left": {
           "type": "literal",
-          "kind": "int",
-          "value": 2
-        },
-        "right": {
-          "kind": "",
-          "type": "bin_op",
-          "value": "+",
-          "left": {
-            "type": "ident",
-            "value": "i"
-          },
-          "right": {
-            "kind": "bool",
-            "type": "comp_op",
-            "value": ">",
-            "left": {
-              "type": "literal",
-              "kind": "int",
-              "value": 5
-            },
-            "right": {
-              "kind": "int",
-              "type": "bin_op",
-              "value": "+",
-              "left": {
-                "type": "literal",
-                "kind": "int",
-                "value": 10
-              },
-              "right": {
-                "type": "literal",
-                "kind": "int",
-                "value": 12
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "type": "control",
-      "body": {
-        "type": "literal",
-        "kind": "Object",
-        "value": []
-      },
-      "value": {
-        "kind": "bool",
-        "type": "comp_op",
-        "value": ">",
-        "left": {
-          "type": "literal",
-          "kind": "int",
-          "value": 5
-        },
-        "right": {
-          "kind": "",
-          "type": "bin_op",
-          "value": "+",
-          "left": {
+          "kind": "struct",
+          "ident": "b",
+          "value": {
             "type": "literal",
-            "kind": "int",
-            "value": 3
-          },
-          "right": {
-            "kind": "bool",
-            "type": "comp_op",
-            "value": "<",
-            "left": {
-              "type": "literal",
-              "kind": "int",
-              "value": 12
-            },
-            "right": {
-              "type": "literal",
-              "kind": "int",
-              "value": 3
-            }
+            "kind": "struct",
+            "value": []
           }
         }
-      }
-    },
-    {
-      "type": "control",
-      "body": {
-        "type": "literal",
-        "kind": "Object",
-        "value": []
-      },
-      "value": {
-        "type": "literal",
-        "kind": "bool",
-        "value": true
       }
     }
   ]

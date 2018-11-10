@@ -1,0 +1,185 @@
+{
+  "type": "program",
+  "value": [
+    {
+      "type": "declaration",
+      "kind": "type",
+      "ident": "thing",
+      "value": {
+        "type": "literal",
+        "kind": "struct",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": false,
+            "kind": "int",
+            "ident": "i",
+            "value": {
+              "type": "literal",
+              "kind": "int",
+              "value": 15
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": false,
+            "kind": "float",
+            "ident": "f",
+            "value": {
+              "type": "literal",
+              "kind": "float",
+              "value": 0
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": false,
+            "kind": "bool",
+            "ident": "b",
+            "value": {
+              "type": "literal",
+              "kind": "bool",
+              "value": false
+            }
+          },
+          {
+            "type": "declaration",
+            "infer": false,
+            "kind": "string",
+            "ident": "s",
+            "value": {
+              "type": "literal",
+              "kind": "string",
+              "value": ""
+            }
+          },
+          {
+            "type": "declaration",
+            "kind": "function",
+            "ident": "something",
+            "args": [],
+            "returns": [
+              {
+                "type": "type",
+                "value": "string"
+              }
+            ],
+            "body": {
+              "type": "literal",
+              "kind": "Object",
+              "value": [
+                {
+                  "type": "return",
+                  "value": {
+                    "type": "ident",
+                    "value": "s"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "declaration",
+      "kind": "function",
+      "ident": "somethingElse",
+      "args": [],
+      "returns": [
+        {
+          "type": "ident",
+          "value": "thing"
+        }
+      ],
+      "body": {
+        "type": "literal",
+        "kind": "Object",
+        "value": [
+          {
+            "type": "declaration",
+            "infer": false,
+            "kind": "thing",
+            "ident": "t",
+            "value": {
+              "type": "literal",
+              "kind": "struct",
+              "ident": "thing",
+              "value": {
+                "type": "literal",
+                "kind": "struct",
+                "value": [
+                  {
+                    "type": "assignment",
+                    "ident": "i",
+                    "value": {
+                      "type": "literal",
+                      "kind": "int",
+                      "value": 2
+                    }
+                  },
+                  {
+                    "type": "assignment",
+                    "ident": "f",
+                    "value": {
+                      "type": "literal",
+                      "kind": "float",
+                      "value": 67.65
+                    }
+                  },
+                  {
+                    "type": "assignment",
+                    "ident": "b",
+                    "value": {
+                      "type": "literal",
+                      "kind": "bool",
+                      "value": true
+                    }
+                  },
+                  {
+                    "type": "assignment",
+                    "ident": "s",
+                    "value": {
+                      "type": "literal",
+                      "kind": "string",
+                      "value": "hey its me"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "return",
+            "value": {
+              "type": "ident",
+              "value": "t"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "ident": {
+        "type": "ident",
+        "value": "printf"
+      },
+      "params": [
+        {
+          "type": "literal",
+          "kind": "string",
+          "value": "the string value is: %s\\n"
+        },
+        {
+          "type": "call",
+          "ident": {
+            "type": "ident",
+            "value": "somethingElse"
+          },
+          "params": []
+        }
+      ]
+    }
+  ]
+}

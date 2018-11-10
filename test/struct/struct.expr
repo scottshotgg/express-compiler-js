@@ -1,0 +1,25 @@
+import std
+
+struct thing {
+  int i = 15
+  float f
+  bool b
+  string s
+
+  function something() -> string {
+    return s
+  }
+}
+
+function somethingElse() -> thing {
+  thing t = thing{
+    i = 2
+    f = 67.65
+    b = true
+    s = "hey its me"
+  }
+  return t
+}
+
+printf("printf value is:      %s\n", somethingElse().something().c_str())
+std.Println("std.Println value is:", somethingElse().something())

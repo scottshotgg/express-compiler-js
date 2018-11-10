@@ -1,0 +1,9 @@
+package libc
+
+// For no dynamic variables
+// use strict
+
+// In order to make direct C references using c.*
+// use unsafe
+
+type File c.FILE

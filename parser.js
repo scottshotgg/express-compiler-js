@@ -1,12 +1,14 @@
 module.exports = class Parser {
   constructor(tokens) {
     // return {
+    this.typeMap = {}
     this.tokens = tokens
     this.index = 0
     this.nodes = {
       type: "program",
       value: []
     }
+
 
     this.buildAST = function () {
       for (this.index = 0; this.index < this.tokens.length; this.index++) {
@@ -72,6 +74,13 @@ module.exports = class Parser {
 
         // ident
         case "ident":
+          // Check the typemap to cure the lexer inabilities
+          if (this.typeMap[this.tokens[this.index].value]) {
+            // If the ident is actually a type, change its token type and re-parse
+            this.tokens[this.index].type = 'type'
+            return this.getDeclarationStatement(false, this.tokens[this.index].value)
+          }
+
           if (this.isNextToken("lparen")) {
             return this.getFunctionCall();
             // return this.getExpression()
@@ -174,6 +183,16 @@ module.exports = class Parser {
           left: factor,
           right: expr
         };
+      } else if (this.isNextToken('selector') && !this.isNextToken('selector', 2)) {
+        this.index++
+        const selection = this.getExpression()
+        return {
+          type: 'selector',
+          ident: factor,
+          value: selection
+        }
+        console.log({ selection })
+        process.exit(9)
       }
 
       return factor;
@@ -181,11 +200,15 @@ module.exports = class Parser {
 
     this.getFactor = function () {
       const tok = this.tokens[this.index];
-      console.log('i am here', tok)
       let expr
 
       // Literal and Ident are the ground states
       switch (tok.type) {
+        case "call":
+          // we really should have put the selector actually in the term thing
+          return this.getFunctionCall()
+
+
         case "literal":
           if (this.isNextToken("selector") && this.tokens[this.index + 2].type != "selector") {
             this.index++;
@@ -215,7 +238,6 @@ module.exports = class Parser {
 
         case "ident":
           if (this.isNextToken("lparen")) {
-            console.log("im here bby")
             return this.getFunctionCall();
           }
 
@@ -224,6 +246,12 @@ module.exports = class Parser {
             ret.ident = tok.value
 
             return ret
+          }
+
+          // struct
+          if (this.isNextToken('lbrace')) {
+            this.index--
+            return this.getStruct()
           }
 
           if (this.isNextToken("selector") && this.tokens[this.index + 2].type == "selector") {
@@ -241,7 +269,6 @@ module.exports = class Parser {
             return this.getHint()
           }
 
-          console.log("im here bby")
           return {
             type: "selector",
             ident: tok.value,
@@ -249,7 +276,6 @@ module.exports = class Parser {
           };
 
         case "lparen":
-          console.log('hey me')
           expr = this.getExpression();
           if (expr === undefined) {
             return this.getHint()
@@ -298,10 +324,119 @@ module.exports = class Parser {
       };
     }
 
+    this.declareStruct = function () {
+      const struct = this.getStruct()
+
+      this.typeMap[struct.ident] = {
+        type: 'struct',
+        value: struct.value
+      }
+
+      struct.type = 'declaration'
+      struct.kind = 'type'
+
+      return struct
+    }
+
+    // Gonna need some checking to make sure this is not already in there
+    this.getStruct = function () {
+      if (this.isNextToken('ident') && this.isNextToken('lbrace', 2)) {
+        this.index += 2
+        var typeMapident = this.tokens[this.index - 1].value
+
+        const expre = this.getBlock()
+        if (expre === undefined) {
+          return this.getHint()
+        }
+
+        expre.kind = 'struct'
+
+        return {
+          type: 'literal',
+          kind: 'struct',
+          ident: typeMapident,
+          value: expre
+        }
+      }
+
+      return this.getHint()
+    }
+
+    // `type` [ident] [type]
+    this.declareType = function () {
+      if (this.isNextToken('ident') && this.isNextToken('type', 2)) {
+        this.index += 2
+        this.typeMap[this.tokens[this.index - 1].value] = {
+          type: this.tokens[this.index].value
+        }
+
+        return {
+          type: 'declaration',
+          kind: 'type',
+          ident: this.tokens[this.index - 1].value,
+          value: this.tokens[this.index].value
+        }
+      }
+
+      return this.getHint()
+    }
+
+    // All of these values are false-y
+    this.getDefaultForType = function (kind) {
+      switch (kind) {
+        case "int":
+          return {
+            type: "literal",
+            kind,
+            value: 0
+          }
+
+        case "float":
+          return {
+            type: "literal",
+            kind,
+            value: 0.0
+          }
+
+        case "string":
+          return {
+            type: "literal",
+            kind,
+            value: ""
+          }
+
+        case "bool":
+          return {
+            type: "literal",
+            kind,
+            value: false
+          }
+
+        default:
+          var type = this.typeMap[kind]
+          if (type) {
+            if (type.value) {
+              // Might need to do something here
+              return type.value
+            }
+
+            return this.getDefaultForType(type.type)
+          }
+      }
+
+      return this.getHint()
+    }
+
     // ( `let` | `var` ) IDENT `=` EXPRESSION
     this.getDeclarationStatement = function (infer, kind = this.tokens[this.index]) {
-      if (this.tokens[this.index].value == "function") {
+      var toki = this.tokens[this.index]
+
+      if (toki.value == "function") {
         return this.getFunction();
+      } else if (toki.value == 'type') {
+        return this.declareType();
+      } else if (toki.value == 'struct') {
+        return this.declareStruct();
       }
 
       this.index++;
@@ -312,13 +447,21 @@ module.exports = class Parser {
         return this.getHint();
       }
 
+      if (this.index < this.tokens.length && this.tokens[this.index + 1].type != "assign") {
+        // return this.getHint();
+        // Need to check let here
+        return {
+          type: "declaration",
+          infer: false,
+          kind: kind,
+          ident: tok.value,
+          value: this.getDefaultForType(kind)
+        }
+      }
+
       // if (infer) {
       this.index++;
       // }
-
-      if (this.index < this.tokens.length && this.tokens[this.index].type != "assign") {
-        return this.getHint();
-      }
 
       const expr = this.getExpression()
       if (expr === undefined) {
@@ -427,6 +570,22 @@ module.exports = class Parser {
       const expr = this.getExpression()
       if (expr === undefined) {
         return this.getHint()
+      }
+
+      // check if the ident that the expression got is in the typemap
+      var type = this.typeMap[expr.value]
+      if (expr.type === 'ident' && type) {
+        var structValue = this.getExpression()
+        if (structValue === undefined) {
+          return this.getHint()
+        }
+
+        structValue.value.kind = 'struct'
+
+        return {
+          type: "return",
+          value: structValue
+        }
       }
 
       return {
@@ -578,11 +737,18 @@ module.exports = class Parser {
         this.index++;
         this.index++;
 
-        while (this.isNextToken("type")) {
+        do {
           this.index++;
           const type = this.tokens[this.index];
           returnTypes.push(type);
-        }
+
+          if (this.isNextToken('ident')) {
+            var typee = this.typeMap[this.tokens[this.index]]
+            if (typee) {
+              this.tokens[this.index].type = typee
+            }
+          }
+        } while (this.isNextToken("type"));
       }
       this.index++;
 

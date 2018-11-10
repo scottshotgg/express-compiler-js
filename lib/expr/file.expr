@@ -1,7 +1,10 @@
-package file
+//package file
 
-use unsafe
-use strict
+// For no dynamic variables
+// use strict
+
+// In order to allow the compiler to symbolize direct C references using c.*
+// use unsafe
 
 import strings
 
@@ -12,14 +15,14 @@ import strings
     to return certain things and hide the underlying libc functions;
     this is essentially what Go does and is kinda dumb
 
-  2. c.* are always public and can be used; compiler addition
+  2. * are always public and can be used; compiler addition
 
   3. put the c functions (`fopen`, `fgets`, ...) will be functions in the
     language that can be used raw
 */
 
 struct File = {
-  c.FILE* file = nil
+  FILE* file = nil
   string mode = "r"
   string filename
   string filepath
@@ -28,19 +31,19 @@ struct File = {
   function Read(int amount) -> string {
     string entireLine
     int count
-    int ch = c.fgetc(this.file)
+    int ch = fgetc(this.file)
 
-    while !c.feof(this.file) && count < amount {
+    while !feof(this.file) && count < amount {
       count = count + 1
       entireLine += ch
-      ch = c.fgetc(this.file)
+      ch = fgetc(this.file)
     }
 
     return entireLine
   }
 
   function Write(char[] text) {
-    c.fputs(text, this.file)
+    fputs(text, this.file)
   }
 
   function WriteString(string text) {
@@ -48,15 +51,15 @@ struct File = {
   }
 
   function seekToPosition(int pos) {
-    return c.fseek(this.file, pos, c.SEEK_SET)
+    return fseek(this.file, pos, SEEK_SET)
   }
 
   function Length() -> int {
-    defer seekToPosition(c.ftell(this.file))
+    defer seekToPosition(ftell(this.file))
 
-    c.fseek(this.file, 0, c.SEEK_END)
+    fseek(this.file, 0, SEEK_END)
 
-    return c.ftell(this.file)
+    return ftell(this.file)
   }
 }
 
@@ -65,22 +68,22 @@ function Open(string filepath, string mode) -> File {
   let modeCStr = strings.CString(mode)
 
   return File {
-    file: c.fopen(filepathCStr, modeCStr),
+    file: fopen(filepathCStr, modeCStr),
     mode: modeCStr,
-    filename: c.basename(filepathCStr),
-    filepath: c.dirname(filepathCStr),
+    filename: basename(filepathCStr),
+    filepath: dirname(filepathCStr),
     open: true
   }
 }
 
 function WriteFile(string filepath, string contents, bool overWrite) {
-  let file = c.fopen(strings.CString(filepath), "w")
+  let file = fopen(strings.CString(filepath), "w")
   if file != nil {
     if !overwrite {
-      c.fclose(file)
+      fclose(file)
     }
   }
 
-  c.fputs(strings.CString(contents), file)
-  c.fclose(file)
+  fputs(strings.CString(contents), file)
+  fclose(file)
 }

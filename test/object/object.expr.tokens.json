@@ -1,15 +1,7 @@
 [
   {
-    "type": "import",
-    "value": "import"
-  },
-  {
-    "type": "ident",
-    "value": "c"
-  },
-  {
-    "type": "selector",
-    "value": "."
+    "type": "include",
+    "value": "include"
   },
   {
     "type": "ident",
@@ -24,8 +16,53 @@
     "value": "std"
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "import",
+    "value": "import"
+  },
+  {
+    "type": "ident",
+    "value": "file"
+  },
+  {
+    "type": "type",
+    "value": "string"
+  },
+  {
+    "type": "ident",
+    "value": "program"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "ident",
+    "value": "file"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "ReadFile"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "test/object/object.expr"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "type",
+    "value": "int"
   },
   {
     "type": "ident",
@@ -85,8 +122,34 @@
     "value": 5
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "type",
+    "value": "string"
+  },
+  {
+    "type": "ident",
+    "value": "thing"
+  },
+  {
+    "type": "assign",
+    "value": "="
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "hey"
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": " its me"
+  },
+  {
+    "type": "type",
+    "value": "object"
   },
   {
     "type": "ident",
@@ -101,8 +164,8 @@
     "value": "{"
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "type",
+    "value": "int"
   },
   {
     "type": "ident",
@@ -115,11 +178,11 @@
   {
     "type": "literal",
     "kind": "int",
-    "value": 666
+    "value": 60
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "type",
+    "value": "int"
   },
   {
     "type": "ident",
@@ -184,8 +247,8 @@
     "value": "}"
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "type",
+    "value": "string"
   },
   {
     "type": "ident",
@@ -201,8 +264,8 @@
     "value": "something else"
   },
   {
-    "type": "declaration",
-    "value": "let"
+    "type": "type",
+    "value": "float"
   },
   {
     "type": "ident",
@@ -232,7 +295,135 @@
   },
   {
     "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "printf"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "libc: d: %f\\n"
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
     "value": "Println"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "stdlib d:"
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "Println"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "obj2.d:"
+  },
+  {
+    "type": "ident",
+    "value": "obj2"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "ident",
+    "value": "std"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "Println"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "this is a string "
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "to_string"
   },
   {
     "type": "lparen",
@@ -241,6 +432,73 @@
   {
     "type": "ident",
     "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "ident",
+    "value": "file"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "WriteFile"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "hey.txt"
+  },
+  {
+    "type": "literal",
+    "kind": "string",
+    "value": "this is a string "
+  },
+  {
+    "type": "bin_op",
+    "value": "+"
+  },
+  {
+    "type": "ident",
+    "value": "c"
+  },
+  {
+    "type": "selector",
+    "value": "."
+  },
+  {
+    "type": "ident",
+    "value": "to_string"
+  },
+  {
+    "type": "lparen",
+    "value": "("
+  },
+  {
+    "type": "ident",
+    "value": "d"
+  },
+  {
+    "type": "rparen",
+    "value": ")"
+  },
+  {
+    "type": "literal",
+    "kind": "bool",
+    "value": true
   },
   {
     "type": "rparen",

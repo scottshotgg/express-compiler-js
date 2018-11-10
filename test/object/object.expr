@@ -4,20 +4,20 @@ import file
 
 string program = file.ReadFile("test/object/object.expr")
 
-let c = 6
+int c = 6
 float d = 5.5 + 0.5
 string thing = "hey" + " its me"
 
-let obj2 = {
-  let a = 60
-  let d = a
+object obj2 = {
+  int a = 60
+  int d = a
 
   for 1 .. a {
     d = d + 1
   }
 
-  let b = "something else"
-  let c = 7.7
+  string b = "something else"
+  float c = 7.7
 }
 
 c.printf("libc: d: %f\n", d)

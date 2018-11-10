@@ -29,22 +29,41 @@ if (argv['debug']) {
   console.log(util.inspect(ast, { depth: null, colors: true }));
 }
 var scopeTree = {}
-var includes = ''
+var includes = '#include<string>\n'
 var includesMap = {}
 var functions = ''
+var structs = ''
+
+// This is hacky but fuck it; works for now
+const inStruct = false
 
 function translateObject(value) {
   console.log("thingy brah")
   console.log({ value })
-
-
 
   return "{Object o;" + translateBlock(value) + value.map(stmt => {
     if (stmt.type === 'declaration')
       return 'o.AddProp("' + stmt.ident + '",' + stmt.ident + ');'
 
   }).join('')
+}
 
+var typeMap = {}
+
+function createStructInit(stmts) {
+  console.log({ stmts })
+  var ret = ''
+
+  for (stmt of stmts) {
+    if (stmt.type !== 'assignment') {
+      console.log("Cannot have non assignment statements in struct initializer")
+      process.exit(666)
+    }
+
+    ret += translateExpression(stmt.value) + ', '
+  }
+
+  return ret
 }
 
 function translateExpression(expr) {
@@ -61,19 +80,13 @@ function translateExpression(expr) {
       if (expr.kind == 'string') {
         return "\"" + expr.value + "\""
       } else if (expr.kind == 'Object') {
-        console.log('Expression blocks (objects) have not been implemented')
-
-        // console.log('Object ' + JSON.stringify(expr.value))
-        console.log(translateObject(expr.value))
         return translateObject(expr.value)
-        // process.exit(9)
-
-        // var a
-        // {
-        // index statements using `translateObject`
-        // normal statements
-        // }
+      } else if (expr.kind == 'struct') {
+        // this is for struct returns
+        return expr.ident + '{' + createStructInit(expr.value.value) + '}'
       }
+
+
       return expr.value
 
     case 'ident':
@@ -112,11 +125,24 @@ function translateExpression(expr) {
 
       const ident = scopeTree[expr.ident]
       console.log({ ident })
-      if (ident.type === 'Object') {
+      if (ident !== undefined && ident.type === 'Object') {
         return expr.ident + '["' + translateExpression(expr.value) + '"]'
       }
 
-      return [expr.ident, translateExpression(expr.value)].join('.')
+      var identt = expr.ident
+
+      if (typeof identt === 'object') {
+        identt = translateExpression(expr.ident)
+      }
+
+      // console.log({
+      //   something: expr.ident,
+      //   others: translateExpression(expr.value)
+      // })
+
+      // process.exit(9)
+
+      return [identt, translateExpression(expr.value)].join('.')
 
     default:
       console.log('could not translate:', expr)
@@ -129,7 +155,7 @@ fs.writeFileSync('main.cpp', doTranslation())
 function doTranslation() {
   var thing = translateBlock(ast.value)
   console.log({ functions })
-  return includes + functions + '#include <string>\nusing namespace std;int main(){'
+  return includes + 'using namespace std;' + structs + functions + 'int main(){'
     + thing
     + '}'
 }
@@ -144,8 +170,9 @@ function translateBlock(stmts) {
     switch (stmt.type) {
       case 'return':
         ret += 'return '
-        if (stmt.value !== undefined)
+        if (stmt.value !== undefined) {
           ret += translateExpression(stmt.value)
+        }
         ret += ';'
         break
 
@@ -228,12 +255,53 @@ function translateBlock(stmts) {
         break
 
       case 'declaration':
+        if (stmt.kind === 'type') {
+          // if the TYPE of the object itself in Javascript is an object
+          if (typeof stmt.value === 'object') {
+            // we have a struct
+
+            console.log({ stmttype: stmt.kind })
+            if (stmt.kind !== 'type') {
+              console.log("struct literal", stmt)
+              process.exit(9)
+            }
+
+            const oldFunctions = functions
+            functions = ''
+
+            var block = translateBlock(stmt.value.value)
+            var funcs = functions
+            functions = oldFunctions
+
+            structs += 'class ' + stmt.ident + '{ public:' + funcs + block + ' };\n\n'
+            break
+          }
+
+
+          // Add the statement to the type map
+          typeMap[stmt.ident] = stmt.value
+
+          // This typedef is local scope only; might need to change that
+          ret += 'typedef ' + stmt.value + ' ' + stmt.ident + ';'
+          break
+        }
+
         if (stmt.kind === 'function') {
-          functions += translateFunction(stmt)
+          functions += translateFunction(stmt) + "\n"
           break
         }
 
         var kind = stmt.value.kind
+        if (kind === 'struct') {
+          // will need to check the type here
+          kind = stmt.value.ident
+        }
+
+        // Hack in the statement kind
+        if (kind === undefined) {
+          kind = stmt.kind
+        }
+
         if (kind === undefined || kind === '') {
           if (stmt.value.type == 'bin_op') {
             const left = translateExpression(stmt.value.left)
@@ -258,14 +326,14 @@ function translateBlock(stmts) {
           }
         }
 
-        if (kind === undefined) {
-          var ident = scopeTree[stmt.value.value]
-          if (ident === undefined) {
-            console.log('idk what to do:', ident)
-            process.exit(9)
-          }
-          kind = ident.type
-        }
+        // if (kind === undefined) {
+        //   var ident = scopeTree[stmt.value.value]
+        //   if (ident === undefined) {
+        //     console.log('idk what to do:', ident)
+        //     process.exit(9)
+        //   }
+        //   kind = ident.type
+        // }
 
         scopeTree[stmt.ident] = {
           value: stmt.value,
@@ -312,8 +380,9 @@ function translateFunction(stmt) {
       break
 
     case 1:
-      ret += stmt.returns[0].
-        break
+      // wtf not sure
+      ret += stmt.returns[0].value + ' '
+      break
 
     default:
       console.log('Multiple returns are not supported right now')
@@ -326,6 +395,6 @@ function translateFunction(stmt) {
     + stmt.args.map(arg => arg.kind + ' ' + arg.value).join(', ')
     + ') {'
     + translateBlock(stmt.body.value)
-    + '}'
+    + '}\n'
 }
 

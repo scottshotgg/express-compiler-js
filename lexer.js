@@ -23,6 +23,10 @@ const lexemes = {
     type: 'type',
     value: 'bool'
   },
+  struct: {
+    type: 'declaration',
+    value: 'struct'
+  },
   object: {
     type: 'type',
     value: 'object'
@@ -64,6 +68,11 @@ const lexemes = {
     value: 'include'
   },
 
+  type: {
+    type: 'declaration',
+    value: 'type'
+  },
+
   function: {
     type: 'declaration',
     value: 'function'
@@ -74,6 +83,7 @@ const lexemes = {
     type: 'declaration',
     value: 'function'
   },
+
   return: {
     type: 'return',
     value: 'return'
@@ -221,7 +231,7 @@ module.exports = class Lexer {
             value: string
           })
           // Force accumulator lexing if there is a separator
-        } else if(char === ',') {
+        } else if (char === ',') {
           if (this.accumulator != '') {
             const lexeme = this.lexLit(this.accumulator)
             if (lexeme === undefined) {
@@ -244,7 +254,11 @@ module.exports = class Lexer {
       }
 
       if (this.accumulator != '') {
-        this.tokens.push(this.lexLit(this.accumulator));
+        if (lexemes[this.accumulator]) {
+          this.tokens.push(lexemes[this.accumulator])
+        } else {
+          this.tokens.push(this.lexLit(this.accumulator));
+        }
       }
 
       return this.tokens;
@@ -265,17 +279,17 @@ module.exports = class Lexer {
     //         this.tokens.push(this.lexLit(this.accumulator))
     //         this.accumulator = ""
     //       }
-    
+
     //       this.tokens.push(lexemes[char])
     //     } else {
     //       this.accumulator += char
     //     }
     //   }
-    
+
     //   if (this.accumulator != "") {
     //     this.tokens.push(this.lexLit(this.accumulator))
     //   }
-    
+
     //   return this.tokens
     // }
 

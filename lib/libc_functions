@@ -1,0 +1,6 @@
+function fopen(const char* FILENAME, const char* OPENTYPE) -> FILE*
+function fclose(FILE* STREAM) -> int
+function fseek(FILE* STREAM, int OFFSET, int WHENCE) -> int
+function ftell(FILE* STREAM) -> int
+function fgetc(FILE* STREAM) -> int
+function fputs(const char* S, FILE* STREAM) -> int
